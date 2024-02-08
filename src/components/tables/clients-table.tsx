@@ -2,19 +2,15 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from './data-table'
 import { Clients } from '@/constants/types'
-import { useDeleteRequirementMutation, useGetRequirements } from '@/data/hooks/useRequirementsClient'
-import Link from 'next/link'
-import { PageRoutes } from '@/constants/page-routes'
 import { FileEdit } from 'lucide-react'
-import ConfirmDeleteDialog from '../dialogs/confirm-delete-dialog'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
-import { Card, CardHeader, CardTitle } from '../ui/card'
 import { Button } from '../ui/button'
 import { DataTableColumnHeader } from './data-table/data-table-column-header'
 import { useGetClients } from '@/data/hooks/useClientsClient'
+import Link from 'next/link'
+import ConfirmDeleteDialog from '../dialogs/confirm-delete-dialog'
+import { Badge } from '../ui/badge'
 
 export default function ClientsTable() {
-  const { mutate: deleteRequirement, isPending: isLoading } = useDeleteRequirementMutation()
 
   const columns: ColumnDef<Clients>[] = [
     {
@@ -23,7 +19,7 @@ export default function ClientsTable() {
     },
     {
       accessorKey: 'firstName',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="firstName" />
+      header: ({ column }) => <DataTableColumnHeader column={column} title="First Name" />
     },
     {
       accessorKey: 'lastName',
@@ -36,6 +32,13 @@ export default function ClientsTable() {
     {
       accessorKey: 'phoneNumber',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Phone Number" />
+    },
+    {
+      accessorKey: 'role',
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
+      cell: ({ row }) => {
+        return <Badge>{row.original.role}</Badge>
+      }
     },
     {
       accessorKey: 'dateOfBirth',
@@ -78,12 +81,12 @@ export default function ClientsTable() {
       enableHiding: false,
       cell: ({ row }) => (
         <div className="flex items-center">
-          <Link href={PageRoutes.dashboard.admin.REQUIREMENTS_EDIT(row.original.id)}>
+          <Link href="/">
             <Button variant="ghost">
               <FileEdit size={17} color="black" />
             </Button>
           </Link>
-          <ConfirmDeleteDialog onDelete={() => deleteRequirement(row.original.id)} isLoading={isLoading} />
+          <ConfirmDeleteDialog onDelete={() => { }} isLoading={false} />
         </div>
       )
     }

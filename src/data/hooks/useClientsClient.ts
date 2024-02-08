@@ -24,55 +24,20 @@ export function useGetOneRequirement(id: number) {
   return { data: data?.data, loading: isLoading }
 }
 
-export const useCreateRequirementMutation = () => {
+export const useCreateClientMutation = () => {
   const queryClient = useQueryClient()
 
   const router = useRouter()
 
   return useMutation({
-    mutationFn: requirementsClient.create,
+    mutationFn: clientsClient.create,
     onSuccess: () => {
       toast({
         variant: 'default',
-        title: 'Requirement created successfully'
+        title: 'Client created successfully'
       })
-      queryClient.refetchQueries({ queryKey: [ApiEndpoints.REQUIREMENTS] })
-      router.push(PageRoutes.dashboard.admin.REQUIREMENTS)
-    }
-  })
-}
-
-export const useUpdateRequirementMutation = () => {
-  const queryClient = useQueryClient()
-  const router = useRouter()
-
-  return useMutation({
-    mutationFn: requirementsClient.update,
-    onSuccess: () => {
-      toast({
-        variant: 'default',
-        title: 'Requirement updated successfully'
-      })
-      queryClient.refetchQueries({
-        queryKey: [ApiEndpoints.REQUIREMENTS]
-      })
-      router.push(PageRoutes.dashboard.admin.REQUIREMENTS)
-    }
-  })
-}
-
-export const useDeleteRequirementMutation = () => {
-  const queryClient = useQueryClient()
-  return useMutation({
-    mutationFn: requirementsClient.delete,
-    onSuccess: () => {
-      toast({
-        variant: 'default',
-        title: 'Requirement successfully deleted'
-      })
-    },
-    onSettled: () => {
-      queryClient.refetchQueries({ queryKey: [ApiEndpoints.REQUIREMENTS] })
+      queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
+      router.push(PageRoutes.dashboard.admin.CLIENTS)
     }
   })
 }
