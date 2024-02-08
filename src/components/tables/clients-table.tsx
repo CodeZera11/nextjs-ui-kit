@@ -1,7 +1,7 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from './data-table'
-import { Clients } from '@/constants/types'
+import { Client } from '@/constants/types'
 import { FileEdit } from 'lucide-react'
 import { Button } from '../ui/button'
 import { DataTableColumnHeader } from './data-table/data-table-column-header'
@@ -9,10 +9,13 @@ import { useGetClients } from '@/data/hooks/useClientsClient'
 import Link from 'next/link'
 import ConfirmDeleteDialog from '../dialogs/confirm-delete-dialog'
 import { Badge } from '../ui/badge'
+import ConfirmActionDialog from '../dialogs/confirm-action-dialog'
+import UpdateMortgageStatusForm from '../forms/dashboard/mortgage/update-status-form'
+import AddClientCaseForm from '../forms/client/add-case-form'
 
 export default function ClientsTable() {
 
-  const columns: ColumnDef<Clients>[] = [
+  const columns: ColumnDef<Client>[] = [
     {
       accessorKey: 'id',
       header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />
@@ -77,15 +80,28 @@ export default function ClientsTable() {
       }
     },
     {
+      accessorKey: 'updatedAt',
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Updated At" />,
+      cell: ({ row }) => {
+        const createdAt = row.original.createdAt
+        return new Date(createdAt).toLocaleDateString()
+      }
+    },
+    {
       id: 'actions',
       enableHiding: false,
       cell: ({ row }) => (
         <div className="flex items-center">
-          <Link href="/">
-            <Button variant="ghost">
-              <FileEdit size={17} color="black" />
-            </Button>
-          </Link>
+          <ConfirmActionDialog
+            title="Add Case"
+            anchor={
+              <Button variant="secondary" size="sm">
+                Add Case
+              </Button>
+            }
+            content={<AddClientCaseForm data={row.original} />}
+          />
+
           <ConfirmDeleteDialog onDelete={() => { }} isLoading={false} />
         </div>
       )

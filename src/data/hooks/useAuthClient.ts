@@ -28,7 +28,6 @@ export function useSignUp() {
       const newUser = JSON.stringify({ firstName, lastName, email, role, phoneNumber })
       localStorage.setItem(LocalStorageKeys.USER, newUser)
 
-      router.push(PageRoutes.dashboard.MORTGAGES)
     },
     onError: (error: any) => {
       console.log({ toastError: error })

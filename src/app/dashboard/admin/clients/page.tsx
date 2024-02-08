@@ -10,7 +10,7 @@ const Page = () => {
     <>
       <header className="dashboard_header justify-between dark:bg-gray-800/40 lg:h-[60px]">
         <h1 className="text-lg font-semibold">Clients</h1>
-        <Link href={PageRoutes.dashboard.admin.CLIENTS}>
+        <Link href={PageRoutes.dashboard.admin.ADD_CLIENT}>
           <Button>Create New Client</Button>
         </Link>
       </header>

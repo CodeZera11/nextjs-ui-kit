@@ -24,7 +24,7 @@ export default function PropertiesTable() {
   const { mutate: deleteProperty, isPending } = useDeletePropertyMutation()
 
   const userRole = useGetUserRole()
-  const isAdmin = userRole === UserRoleEnum.ADMIN || userRole === UserRoleEnum.SUPER_ADMIN
+  const isAdmin = userRole === UserRoleEnum.SUPER_ADMIN
   const columns: ColumnDef<Property>[] = [
     {
       accessorKey: 'id',
@@ -102,9 +102,8 @@ export default function PropertiesTable() {
         return (
           <Badge
             variant="outline"
-            className={`uppercase ${
-              data.submissionStatus === PropertySubmissionStatusEnum.APPROVED ? 'bg-teal-600 text-white' : ''
-            }`}
+            className={`uppercase ${data.submissionStatus === PropertySubmissionStatusEnum.APPROVED ? 'bg-teal-600 text-white' : ''
+              }`}
           >
             {data.submissionStatus === PropertySubmissionStatusEnum.SUBMITTED
               ? 'Waiting For approval'
@@ -121,9 +120,9 @@ export default function PropertiesTable() {
       cell: ({ row }) => {
         return (
           <div className="flex items-center space-x-2">
-            <Link href={PageRoutes.dashboard.PROPERTY_DETAILS(row.original.id)}>
-              <Button size="sm">View Details</Button>
-            </Link>
+            {/* <Link href={PageRoutes.dashboard.PROPERTY_DETAILS(row.original.id)}> */}
+            <Button size="sm">View Details</Button>
+            {/* </Link> */}
           </div>
         )
       }

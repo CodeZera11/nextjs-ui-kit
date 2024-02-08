@@ -66,7 +66,7 @@ export interface RequirementApplication {
   valuationFee: number
 }
 
-export interface Clients {
+export interface Client {
   id: number
   firstName: string
   lastName: string
