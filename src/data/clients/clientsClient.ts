@@ -1,7 +1,8 @@
-import { Clients, QueryOptions } from '@/constants/types'
+import { Client, QueryOptions } from '@/constants/types'
 import { crudFactory } from '@/lib/crud-factory'
 
 import { ApiEndpoints } from '@/constants/api'
+import HttpClient from '@/lib/http-client'
 
 export interface CreateClientInput {
   firstName: string
@@ -24,5 +25,8 @@ export interface CreateClientInput {
 }
 
 export const clientsClient = {
-  ...crudFactory<Clients, QueryOptions, CreateClientInput>(ApiEndpoints.CLIENTS)
+  ...crudFactory<Client, QueryOptions, CreateClientInput>(ApiEndpoints.CLIENTS),
+  addCase: (caseDetails: any) => {
+    return HttpClient.post<any>(`${ApiEndpoints.CLIENTS}/add-case`, caseDetails)
+  }
 }

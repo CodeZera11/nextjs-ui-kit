@@ -41,3 +41,20 @@ export const useCreateClientMutation = () => {
     }
   })
 }
+
+export const useAddCaseMutation = () => {
+  const router = useRouter()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: clientsClient.addCase,
+    onSuccess: (data: any) => {
+      toast({
+        variant: 'default',
+        title: 'Case Added Successfully'
+      })
+    },
+    onSettled: () => {
+      queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
+    }
+  })
+}
