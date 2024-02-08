@@ -13,6 +13,8 @@ import Link from 'next/link'
 import { PageRoutes } from '@/constants/page-routes'
 import { useSearchParams } from 'next/navigation'
 import { useEffect } from 'react'
+import PhoneNumberInputElement from '@/components/forms/elements/phone-number-input'
+import DatePickerElement from '@/components/forms/elements/date-picker-element'
 
 const formSchema = z.object({
   firstName: z.string({
@@ -21,9 +23,43 @@ const formSchema = z.object({
   lastName: z.string({
     required_error: 'Please enter your last name!'
   }),
+  dateOfBirth: z.date({
+    required_error: 'Please enter your DOB'
+  }),
   email: z.string({
     required_error: 'Please enter your email!'
   }),
+  phoneNumber: z
+    .string({
+      required_error: 'Please enter a valid phone number.'
+    })
+    .min(10, {
+      message: 'Phone number must be at least 10 characters.'
+    }),
+  supervisionTier: z.string({
+    required_error: 'Please enter your supervision tier!'
+  }).optional(),
+  supervisionLevel: z.string({
+    required_error: 'Please enter your supervision level!'
+  }).optional(),
+  attorneyName: z.string({
+    required_error: 'Please enter your attorney name!'
+  }).optional(),
+  attorneyEmail: z.string({
+    required_error: 'Please enter your attorney email!'
+  }).optional(),
+  attorneyPhone: z.string({
+    required_error: 'Please enter your attorney phone!'
+  }).optional(),
+  charge: z.string({
+    required_error: 'Please enter your charge!'
+  }).optional(),
+  chargeDescription: z.string({
+    required_error: 'Please enter your charge description!'
+  }).optional(),
+  docketNumber: z.string({
+    required_error: 'Please enter your docket number!'
+  }).optional(),
   password: z
     .string({
       required_error: 'Please enter a password!'
@@ -41,7 +77,7 @@ const Page = () => {
   const firstName = searchParams.get('firstName')
   const lastName = searchParams.get('lastName')
 
-  const { isPending: isLoading, mutate: createUser } = useSignUp()
+  const { isPending: isLoading, mutate: createCaseManager } = useSignUp()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema)
@@ -60,7 +96,7 @@ const Page = () => {
   }, [])
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createUser({
+    createCaseManager({
       ...values
     })
   }
@@ -76,18 +112,22 @@ const Page = () => {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 p-4">
-              <div className="space-y-2">
+              <div className='grid grid-cols-2 gap-x-10 gap-y-5'>
                 <InputElement name="firstName" placeholder="John" label="First Name" />
-              </div>
-              <div className="space-y-2">
                 <InputElement name="lastName" placeholder="Wick" label="Last Name" />
-              </div>
-              <div className="space-y-2">
+                <DatePickerElement name='dateOfBirth' label='Date Of Birth' />
                 <CustomInputElement name="email" label="Email" type="email" />
+                <PhoneNumberInputElement name='phoneNumber' label='Phone Number' />
+                <InputElement name="supervisionTier" label="Supervision Tier" />
+                <InputElement name="supervisionLevel" label="Supervision Level" />
+                <InputElement name="attorneyName" label="Attorney Name" />
+                <CustomInputElement name="attorneyEmail" label="Attorney Email" type="email" />
+                <PhoneNumberInputElement name='attorneyPhone' label='Attorney Phone Number' />
+                <InputElement name="charge" label="Charge" />
+                <InputElement name="chargeDescription" label="Charge Description" />
+                <InputElement name="docketNumber" label="Docket Number" />
               </div>
-              <div className="space-y-2">
-                <CustomInputElement name="password" label="Password" type="password" />
-              </div>
+              <CustomInputElement name="password" label="Password" type="password" />
               <Button disabled={isLoading} className="w-full" type="submit">
                 {isLoading ? 'Loading...' : 'Sign Up'}
               </Button>

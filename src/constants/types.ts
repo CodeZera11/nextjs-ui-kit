@@ -66,6 +66,26 @@ export interface RequirementApplication {
   valuationFee: number
 }
 
+export interface Clients {
+  id: number
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+  dateOfBirth: string
+  supervisionTier: string
+  supervisionLevel: string
+  attorneyName: string
+  attorneyEmail: string
+  attorneyPhone: string
+  charge: string
+  chargeDescription: string
+  docketNumber: string
+  role: UserRoleEnum
+  createdAt: string
+  updatedAt: string
+}
+
 export interface Property {
   id: number
   propertyTypeId: number
@@ -124,6 +144,7 @@ export type User = {
   firstName: string
   lastName: string
   role: UserRoleEnum
+  phoneNumber: string
   createdAt: string
   updatedAt: string
 }

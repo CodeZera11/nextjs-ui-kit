@@ -14,28 +14,23 @@ import NavBar from '@/components/navigation/dashboard-nav-bar'
 
 const roleToPageMapping = {
   [UserRoleEnum.SUPER_ADMIN]: [
-    // PageRoutes.admin.AGENTS,
     PageRoutes.admin.USERS,
     PageRoutes.admin.REQUIREMENTS,
     PageRoutes.dashboard.PROFILE,
     PageRoutes.dashboard.MORTGAGES,
-    // PageRoutes.dashboard.PROPERTIES
+    PageRoutes.dashboard.admin.CLIENTS
   ],
-  [UserRoleEnum.ADMIN]: [
-    // PageRoutes.admin.AGENTS,
+  [UserRoleEnum.CASE_MANAGER]: [
     PageRoutes.admin.USERS,
     PageRoutes.admin.REQUIREMENTS,
     PageRoutes.dashboard.PROFILE,
     PageRoutes.dashboard.MORTGAGES,
-    // PageRoutes.dashboard.PROPERTIES
+    PageRoutes.dashboard.admin.CLIENTS
   ],
-  [UserRoleEnum.GENERAL_USER]: [
+  [UserRoleEnum.CLIENT]: [
     PageRoutes.dashboard.MORTGAGES,
-    // PageRoutes.dashboard.PROPERTIES,
     PageRoutes.dashboard.PROFILE,
-    // PageRoutes.admin.REQUIREMENTS
   ],
-  [UserRoleEnum.AGENT]: [PageRoutes.dashboard.MORTGAGES, PageRoutes.dashboard.PROPERTIES, PageRoutes.dashboard.PROFILE]
 }
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

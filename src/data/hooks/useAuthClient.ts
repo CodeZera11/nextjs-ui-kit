@@ -22,10 +22,10 @@ export function useSignUp() {
 
       const { jwtToken, user } = data
 
-      const { firstName, lastName, email, role } = user
+      const { firstName, lastName, email, role, phoneNumber } = user
 
       localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, jwtToken)
-      const newUser = JSON.stringify({ firstName, lastName, email, role })
+      const newUser = JSON.stringify({ firstName, lastName, email, role, phoneNumber })
       localStorage.setItem(LocalStorageKeys.USER, newUser)
 
       router.push(PageRoutes.dashboard.MORTGAGES)
@@ -56,7 +56,7 @@ export function useSignIn() {
       localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, jwtToken)
       const newUser = JSON.stringify({ firstName, lastName, email, role, id })
       localStorage.setItem(LocalStorageKeys.USER, newUser)
-      router.push(PageRoutes.dashboard.MORTGAGES)
+      router.push(PageRoutes.dashboard.admin.CLIENTS)
     }
   })
 }
@@ -87,7 +87,7 @@ export function useGetUserDetails() {
     data: data?.data ?? {
       firstName: 'John',
       lastName: 'Wick',
-      role: UserRoleEnum.GENERAL_USER,
+      role: UserRoleEnum.CLIENT,
       email: 'johnwick@gmail.com',
       id: 1
     },
@@ -102,7 +102,7 @@ export function useGetUserRole() {
     refetchInterval: 300000
   })
 
-  return data?.data?.role ?? UserRoleEnum.GENERAL_USER
+  return data?.data?.role ?? UserRoleEnum.CLIENT
 }
 
 export function useForgotPassword() {

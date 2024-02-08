@@ -5,7 +5,8 @@ export const PageRoutes = {
       USERS: '/dashboard/admin/users',
       REQUIREMENTS: '/dashboard/admin/requirements',
       REQUIREMENTS_ADD: '/dashboard/admin/requirements/add',
-      REQUIREMENTS_EDIT: (requirementId: number) => `/dashboard/admin/requirements/edit/${requirementId}`
+      REQUIREMENTS_EDIT: (requirementId: number) => `/dashboard/admin/requirements/edit/${requirementId}`,
+      CLIENTS: '/dashboard/admin/clients'
     },
     MORTGAGES: '/dashboard/mortgages',
     MORTGAGE_DETAILS: (mortgageId: number) => `/dashboard/mortgages/${mortgageId}`,

@@ -135,7 +135,7 @@ input::-webkit-inner-spin-button {
 
 .auth_card {
   width: 100%;
-  max-width: 28rem;
+  max-width: 60rem;
   position: relative;
 }
 

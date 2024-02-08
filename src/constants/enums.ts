@@ -207,9 +207,8 @@ export enum DocumentTypeEnum {
 
 export enum UserRoleEnum {
   SUPER_ADMIN = 'SUPER_ADMIN',
-  ADMIN = 'ADMIN',
-  GENERAL_USER = 'GENERAL_USER',
-  AGENT = 'AGENT'
+  CASE_MANAGER = 'CASE_MANAGER',
+  CLIENT = 'CLIENT'
 }
 
 export enum PropertiesStatusEnum {

@@ -15,16 +15,16 @@ const ICON_SIZE = 20
 
 const navigationItems = [
   {
-    title: 'Mortgages',
-    link: PageRoutes.dashboard.MORTGAGES,
-    icon: <FileCode size={ICON_SIZE} />,
-    roles: [UserRoleEnum.ADMIN, UserRoleEnum.SUPER_ADMIN, UserRoleEnum.AGENT]
-  },
-  {
     title: 'Users',
     link: PageRoutes.dashboard.admin.USERS,
     icon: <UserIcon size={ICON_SIZE} />,
     roles: [UserRoleEnum.SUPER_ADMIN]
+  },
+  {
+    title: 'Clients',
+    link: PageRoutes.dashboard.admin.CLIENTS,
+    icon: <UserIcon size={ICON_SIZE} />,
+    roles: [UserRoleEnum.SUPER_ADMIN, UserRoleEnum.CASE_MANAGER]
   },
   {
     title: 'Requirements',
@@ -58,15 +58,7 @@ export default function NavBar({ user }: { user: User }) {
     <div className="flex w-full items-center justify-between gap-2 bg-primary/20 px-5 py-4 dark:bg-gray-800/40 xl:px-16">
       <div className="flex w-full items-center justify-between gap-2 font-semibold ">
         <Link href={otherLinks.BASE_URL} className="flex items-center gap-2 font-semibold text-primary">
-          <Image
-            src={'/assets/logos/logo.png'}
-            quality={100}
-            width={1000}
-            height={1000}
-            alt=""
-            className="h-9 w-auto"
-          />
-          <span>Sire Finance</span>
+          <span>Fortune</span>
         </Link>
         <nav className="hidden items-center gap-10 text-sm font-medium text-primary xl:flex">
           {navigationItems

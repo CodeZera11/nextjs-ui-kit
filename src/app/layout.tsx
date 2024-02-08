@@ -8,8 +8,8 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Sire Finance',
-  description: 'This is a mortgage management application.'
+  title: 'Fortune',
+  description: 'This is a law firm management application.'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
