@@ -11,6 +11,7 @@ import ConfirmActionDialog from '../dialogs/confirm-action-dialog'
 import AddClientCaseForm from '../forms/client/add-case-form'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Card, CardHeader, CardTitle } from '../ui/card'
+import AssignCaseManagerForm from '../forms/client/assign-case-manager-form'
 
 export default function ClientsTable() {
 
@@ -77,7 +78,6 @@ export default function ClientsTable() {
       header: 'Cases',
       cell: ({ row }) => {
         const data = row.original
-        console.log(data.clientCases)
         return (
           <>
             {data?.clientCases?.length > 0 && (
@@ -130,6 +130,16 @@ export default function ClientsTable() {
       enableHiding: false,
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
+          <ConfirmActionDialog
+            title="Assign a Case Manager"
+            anchor={
+              <Button size="sm">
+                Assign Case Manager
+              </Button>
+            }
+            content={<AssignCaseManagerForm data={row.original} />}
+          />
+
           <ConfirmActionDialog
             title="Add Case"
             anchor={

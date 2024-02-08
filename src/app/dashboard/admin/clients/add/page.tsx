@@ -50,15 +50,7 @@ const formSchema = z.object({
   attorneyPhone: z.string({
     required_error: 'Please enter your attorney phone!'
   }).optional(),
-  charge: z.string({
-    required_error: 'Please enter your charge!'
-  }).optional(),
-  chargeDescription: z.string({
-    required_error: 'Please enter your charge description!'
-  }).optional(),
-  docketNumber: z.string({
-    required_error: 'Please enter your docket number!'
-  }).optional(),
+
   address: z.string({
     required_error: 'Please enter your docket number!'
   }).optional(),
@@ -73,7 +65,19 @@ const formSchema = z.object({
   }).optional(),
   clientCases: z.array(
     z.object({
-      nextCourtDate: z.date()
+      // nextCourtDate: z.date()
+      type: z.string({
+        required_error: 'Please enter a type!'
+      }).optional(),
+      charge: z.string({
+        required_error: 'Please enter your charge!'
+      }).optional(),
+      chargeDescription: z.string({
+        required_error: 'Please enter your charge description!'
+      }).optional(),
+      docketNumber: z.string({
+        required_error: 'Please enter your docket number!'
+      }).optional(),
     })
   ).optional(),
   password: z
@@ -93,7 +97,7 @@ const Page = () => {
   const firstName = searchParams.get('firstName')
   const lastName = searchParams.get('lastName')
 
-  const { isPending: isLoading, mutate: createCaseManager } = useCreateClientMutation();
+  const { isPending: isLoading, mutate: createClient } = useCreateClientMutation();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema)
@@ -112,10 +116,11 @@ const Page = () => {
   }, [])
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createCaseManager({
-      ...values
+
+    createClient({
+      ...values,
     })
-    // console.log({ values })
+    console.log({ values })
   }
 
   return (
@@ -138,14 +143,15 @@ const Page = () => {
                 <InputElement name="attorneyName" label="Attorney Name" />
                 <CustomInputElement name="attorneyEmail" label="Attorney Email" type="email" />
                 <PhoneNumberInputElement name='attorneyPhone' label='Attorney Phone Number' />
-                <InputElement name="charge" label="Charge" />
-                <InputElement name="chargeDescription" label="Charge Description" />
-                <InputElement name="docketNumber" label="Docket Number" />
                 <InputElement name="address" label="Address" />
                 <InputElement name="courtAddress" label="Court Address" />
                 <InputElement name="communitySpaceAddress" label="Community Space Address" />
                 <InputElement name="caseManagerSchedule" label="Case Manager Schedule" />
-                <DatePickerElement name="clientCases[0].nextCourtDate" label="Next Court Date" />
+                <InputElement name="clientCases[0].type" label="Type" />
+                <InputElement name="clientCases[0].charge" label="Charge" />
+                <InputElement name="clientCases[0].chargeDescription" label="Charge Description" />
+                <InputElement name="clientCases[0].docketNumber" label="Docket Number" />
+                {/* <DatePickerElement name="clientCases[0].nextCourtDate" label="Next Court Date" /> */}
               </div>
               <CustomInputElement name="password" label="Password" type="password" />
               <Button disabled={isLoading} className="w-full" type="submit" size="lg">

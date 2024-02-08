@@ -71,7 +71,7 @@ export interface Client {
   firstName: string
   lastName: string
   email: string
-  clientCases: { nextCourtDate: string }[]
+  clientCases: { nextCourtDate: string; id: number }[]
   phoneNumber: string
   dateOfBirth: string
   supervisionTier: string

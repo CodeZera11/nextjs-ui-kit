@@ -15,10 +15,10 @@ export function useGetClients() {
   return { data: data?.data, loading: isLoading }
 }
 
-export function useGetOneRequirement(id: number) {
+export function useGetCaseManagers() {
   const { isLoading, data } = useQuery({
-    queryKey: [`${ApiEndpoints.REQUIREMENTS}-${id}`],
-    queryFn: () => requirementsClient.getById({ id })
+    queryKey: [ApiEndpoints.CLIENTS],
+    queryFn: () => clientsClient.getCaseManagers()
   })
 
   return { data: data?.data, loading: isLoading }
@@ -65,6 +65,23 @@ export const useAddCaseMutation = () => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: clientsClient.addCase,
+    onSuccess: (data: any) => {
+      toast({
+        variant: 'default',
+        title: 'Case Added Successfully'
+      })
+    },
+    onSettled: () => {
+      queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
+    }
+  })
+}
+
+export const useAssignCaseManagerMutation = () => {
+  const router = useRouter()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: clientsClient.assignCaseManager,
     onSuccess: (data: any) => {
       toast({
         variant: 'default',
