@@ -42,6 +42,24 @@ export const useCreateClientMutation = () => {
   })
 }
 
+export const useDeleteClientMutation = () => {
+  const queryClient = useQueryClient()
+
+  const router = useRouter()
+
+  return useMutation({
+    mutationFn: clientsClient.delete,
+    onSuccess: () => {
+      toast({
+        variant: 'default',
+        title: 'Client deleted successfully'
+      })
+      queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
+      router.push(PageRoutes.dashboard.admin.CLIENTS)
+    }
+  })
+}
+
 export const useAddCaseMutation = () => {
   const router = useRouter()
   const queryClient = useQueryClient()

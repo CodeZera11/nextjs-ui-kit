@@ -2,18 +2,19 @@
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from './data-table'
 import { Client } from '@/constants/types'
-import { FileEdit } from 'lucide-react'
 import { Button } from '../ui/button'
 import { DataTableColumnHeader } from './data-table/data-table-column-header'
-import { useGetClients } from '@/data/hooks/useClientsClient'
-import Link from 'next/link'
+import { useDeleteClientMutation, useGetClients } from '@/data/hooks/useClientsClient'
 import ConfirmDeleteDialog from '../dialogs/confirm-delete-dialog'
 import { Badge } from '../ui/badge'
 import ConfirmActionDialog from '../dialogs/confirm-action-dialog'
-import UpdateMortgageStatusForm from '../forms/dashboard/mortgage/update-status-form'
 import AddClientCaseForm from '../forms/client/add-case-form'
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
+import { Card, CardHeader, CardTitle } from '../ui/card'
 
 export default function ClientsTable() {
+
+  const { mutate: deleteClient, isPending: isLoading } = useDeleteClientMutation()
 
   const columns: ColumnDef<Client>[] = [
     {
@@ -72,6 +73,43 @@ export default function ClientsTable() {
       header: ({ column }) => <DataTableColumnHeader column={column} title="Attorney Phone" />
     },
     {
+      id: 'clientCases',
+      header: 'Cases',
+      cell: ({ row }) => {
+        const data = row.original
+        console.log(data.clientCases)
+        return (
+          <>
+            {data?.clientCases?.length > 0 && (
+              <div className="flex items-center gap-2">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">View Case Dates</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[800px]">
+                    <DialogHeader>
+                      <DialogTitle>Client Case Dates</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid max-h-[500px] grid-cols-2 gap-4 overflow-y-auto py-4">
+                      {data.clientCases.map((clientCase, i) => {
+                        return (
+                          <Card key={i}>
+                            <CardHeader>
+                              <CardTitle>{new Date(clientCase.nextCourtDate).toLocaleDateString()}</CardTitle>
+                            </CardHeader>
+                          </Card>
+                        )
+                      })}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
+          </>
+        )
+      }
+    },
+    {
       accessorKey: 'createdAt',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
       cell: ({ row }) => {
@@ -91,7 +129,7 @@ export default function ClientsTable() {
       id: 'actions',
       enableHiding: false,
       cell: ({ row }) => (
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
           <ConfirmActionDialog
             title="Add Case"
             anchor={
@@ -102,7 +140,7 @@ export default function ClientsTable() {
             content={<AddClientCaseForm data={row.original} />}
           />
 
-          <ConfirmDeleteDialog onDelete={() => { }} isLoading={false} />
+          <ConfirmDeleteDialog onDelete={() => { deleteClient(row.original.id) }} isLoading={false} />
         </div>
       )
     }
