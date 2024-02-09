@@ -98,6 +98,7 @@ export interface Case {
   appointments?: Appointment[]
   createdAt: string
   updatedAt: string
+  comments: { message: string; userId: number }[]
 }
 
 export interface Appointment {

@@ -1,22 +1,61 @@
 "use client"
 
+import * as z from 'zod'
 import Loader from "@/components/Loader"
 import { DataTable } from "@/components/tables/data-table"
 import { DataTableColumnHeader } from "@/components/tables/data-table/data-table-column-header"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
 import { Appointment } from "@/constants/types"
 import { useGetOneCase } from "@/data/hooks/useCasesClient"
 import { ColumnDef } from "@tanstack/react-table"
-import { MessageCircleIcon, X } from "lucide-react"
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useCreateCommentMutation, useGetCommentsByCase } from '@/data/hooks/useCommentsClient'
+import { LocalStorageKeys } from '@/constants/local-storage-keys'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Form } from '@/components/ui/form'
+import TextAreaElement from '@/components/forms/elements/text-area-element'
+import { Button } from '@/components/ui/button'
+import { Send } from 'lucide-react'
 
 interface Props {
     params: { caseId: number }
 }
 
+const formSchema = z.object({
+    message: z.string({
+        required_error: 'Please enter a message'
+    })
+})
+
 const Page = ({ params: { caseId } }: Props) => {
 
-    const { data, isFetching } = useGetOneCase(caseId)
+    const { data, isFetching } = useGetOneCase(caseId);
+    const { data: comments } = useGetCommentsByCase(Number(caseId))
+
+    const userData = localStorage.getItem(LocalStorageKeys.USER);
+
+    const userDetails = userData && JSON.parse(userData);
+
+    const onMessageSent = () => {
+        form.setValue('message', '')
+    }
+
+    const { mutate: sendComment, isPending: isLoading } = useCreateCommentMutation(onMessageSent)
+
+
+    const form = useForm<z.infer<typeof formSchema>>({
+        resolver: zodResolver(formSchema)
+    })
+
+    function onSubmit(values: z.infer<typeof formSchema>) {
+        sendComment({
+            caseId: Number(caseId),
+            ...values
+        })
+    }
+
+    const message = form.watch("message");
 
     const columns: ColumnDef<Appointment>[] = [
         {
@@ -65,8 +104,62 @@ const Page = ({ params: { caseId } }: Props) => {
                     </div>
                     <div className="flex flex-col gap-2 shadow-md rounded-xl p-5 min-w-[30rem]">
                         <h2 className="text-xl font-semibold uppercase">Chat with the case manager</h2>
-                        <div className="min-h-[25rem] overflow-y-scroll">
+                        <div className='max-h-[25rem] overflow-y-scroll'>
+                            {comments &&
+                                comments?.map((comment, i) => {
+                                    return (
+                                        <div className="flex flex-col  gap-4" key={i}>
+                                            {comment.userId === userDetails.id ? (
+                                                <div className="flex items-end mt-2">
+                                                    <div className="h-10 w-10 flex-none">
+                                                        <Avatar className="h-full w-full">
+                                                            <AvatarImage alt="User" src="/placeholder-avatar.jpg" />
+                                                            <AvatarFallback>
+                                                                {userDetails.firstName?.charAt(0) + userDetails.lastName.charAt(0)}
+                                                            </AvatarFallback>
+                                                        </Avatar>
+                                                    </div>
+                                                    <div className="ml-2 flex-1">
+                                                        <div className="rounded-lg bg-blue-100 p-3 text-black dark:bg-blue-900 dark:text-white">
+                                                            {comment.message}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ) : (
+                                                <div className="flex items-end justify-end mt-2">
+                                                    <div className="mr-2 flex-1">
+                                                        <div className="rounded-lg bg-gray-200 p-3 text-black dark:bg-gray-800 dark:text-white">
+                                                            {comment.message}
+                                                        </div>
+                                                    </div>
+                                                    <div className="h-10 w-10 flex-none">
+                                                        <Avatar className="h-full w-full">
+                                                            <AvatarImage alt="Admin" src="/placeholder-avatar.jpg" />
+                                                            <AvatarFallback>A</AvatarFallback>
+                                                        </Avatar>
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )
+                                })}
                         </div>
+                        <Form {...form}>
+                            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                                <div className="flex mt-2 w-full flex-col items-center gap-2">
+                                    <TextAreaElement name="message" placeholder="Type here..." className="h-[100px] w-[450px]" />
+                                    <Button disabled={isLoading || !message} type="submit" className="h-full w-full">
+                                        {isLoading ? (
+                                            'Sending...'
+                                        ) : (
+                                            <span className="flex items-center gap-2">
+                                                Send <Send className="h-5 w-5" />
+                                            </span>
+                                        )}
+                                    </Button>
+                                </div>
+                            </form>
+                        </Form>
                     </div>
                 </div>
             </div>

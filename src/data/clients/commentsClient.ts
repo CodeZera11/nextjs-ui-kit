@@ -16,6 +16,6 @@ export interface Comment extends CreateCommentInput {
 export const commentsClient = {
   ...crudFactory<CreateCommentInput[], QueryOptions, CreateCommentInput>(ApiEndpoints.COMMENTS),
   getCommentsByCase: (caseId: number) => {
-    return HttpClient.get<Comment[]>(`${ApiEndpoints.COMMENTS_BY_MORTGAGE}/${caseId}`)
+    return HttpClient.get<Comment[]>(`${ApiEndpoints.COMMENTS_BY_CASE}/${caseId}`)
   }
 }
