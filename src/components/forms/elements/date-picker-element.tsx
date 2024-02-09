@@ -34,6 +34,7 @@ const DatePickerElement = ({ name, label, description, disabled = false, custom 
                 <Button
                   variant={'outline'}
                   className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
+                  disabled={disabled}
                 >
                   {field.value ? field?.value?.toLocaleDateString() : <span>Pick a date</span>}
                   <CalenderIcon className="ml-auto h-4 w-4" />

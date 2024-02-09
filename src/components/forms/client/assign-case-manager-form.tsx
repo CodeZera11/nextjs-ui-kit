@@ -27,12 +27,23 @@ const AssignCaseManagerForm = ({ data }: Props) => {
 
     const { data: caseManagersData } = useGetCaseManagers();
 
+    console.log({ caseManagersData })
+
     const [caseManagersOptions, setCaseManagersOptions] = useState<TOption[]>();
     const [caseOptions, setCaseOptions] = useState<TOption[]>();
 
     const { mutate: assignCaseManager, isPending: isLoading } = useAssignCaseManagerMutation()
 
     useEffect(() => {
+        if (data?.clientCases && data?.clientCases?.length > 0) {
+            const caseOptions = data?.clientCases?.map((clientCase) => {
+                return {
+                    label: `${clientCase.docketNumber} - ${clientCase.type}`,
+                    value: clientCase.id.toString()
+                }
+            })
+            setCaseOptions(caseOptions)
+        }
         if (caseManagersData && caseManagersData?.length > 0) {
             let options: TOption[] = []
             caseManagersData?.map((caseManager: any) => {
@@ -41,13 +52,7 @@ const AssignCaseManagerForm = ({ data }: Props) => {
                     value: caseManager.id.toString()
                 })
             })
-            const caseOptions = data?.clientCases?.map((clientCase) => {
-                return {
-                    label: `${clientCase.docketNumber} - ${clientCase.type}`,
-                    value: clientCase.id.toString()
-                }
-            })
-            setCaseOptions(caseOptions)
+
             setCaseManagersOptions(options)
         }
     }, [caseManagersData, data?.clientCases])

@@ -12,6 +12,7 @@ import AddClientCaseForm from '../forms/client/add-case-form'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Card, CardHeader, CardTitle } from '../ui/card'
 import AssignCaseManagerForm from '../forms/client/assign-case-manager-form'
+import AddCaseAppointmentForm from '../forms/client/add-case-appointment'
 
 export default function ClientsTable() {
 
@@ -128,9 +129,10 @@ export default function ClientsTable() {
     {
       id: 'assignCaseManager',
       cell: ({ row }) => {
+        const data = row?.original;
         return (
           <>
-            {row?.original?.clientCases?.length > 0 && (
+            {data?.clientCases?.length > 0 && (
               <ConfirmActionDialog
                 title="Assign Case Manager"
                 anchor={
@@ -138,7 +140,28 @@ export default function ClientsTable() {
                     Assign Case Manager
                   </Button>
                 }
-                content={<AssignCaseManagerForm data={row.original} />}
+                content={<AssignCaseManagerForm data={data} />}
+              />
+            )}
+          </>
+        )
+      }
+    },
+    {
+      id: 'addAppointment',
+      cell: ({ row }) => {
+        const data = row?.original;
+        return (
+          <>
+            {data?.clientCases?.length > 0 && (
+              <ConfirmActionDialog
+                title="Add Appointment"
+                anchor={
+                  <Button size="sm" variant="secondary">
+                    Add Appointment
+                  </Button>
+                }
+                content={<AddCaseAppointmentForm data={data} />}
               />
             )}
           </>
@@ -160,7 +183,7 @@ export default function ClientsTable() {
             content={<AddClientCaseForm data={row.original} />}
           />
 
-          <ConfirmDeleteDialog onDelete={() => { deleteClient(row.original.id) }} isLoading={false} />
+          <ConfirmDeleteDialog onDelete={() => { deleteClient(row.original.id) }} isLoading={isLoading} />
         </div>
       )
     }

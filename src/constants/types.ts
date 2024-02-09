@@ -88,11 +88,12 @@ export interface Client {
 }
 
 export interface Case {
-  id: number;
-  type: string;
-  charge: string;
-  chargeDescription: string;
-  docketNumber: string;
+  id: number
+  type?: string
+  charge?: string
+  chargeDescription?: string
+  docketNumber?: string
+  caseManagerId?: number
 }
 
 export interface Property {
