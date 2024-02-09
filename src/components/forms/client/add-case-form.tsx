@@ -4,8 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Client } from '@/constants/types'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { useAddCaseMutation } from '@/data/hooks/useClientsClient'
 import InputElement from '../elements/input-element'
+import { useCreateCaseMutation } from '@/data/hooks/useCasesClient'
 
 interface Props {
     data: Client
@@ -28,7 +28,7 @@ const formSchema = z.object({
 })
 
 const AddClientCaseForm = ({ data }: Props) => {
-    const { mutate: addCase, isPending: isLoading } = useAddCaseMutation()
+    const { mutate: addCase, isPending: isLoading } = useCreateCaseMutation()
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),

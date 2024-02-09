@@ -4,9 +4,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Client, TOption } from '@/constants/types'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { useAssignCaseManagerMutation, useGetCaseManagers } from '@/data/hooks/useClientsClient'
+import { useGetCaseManagers } from '@/data/hooks/useClientsClient'
 import { useEffect, useState } from 'react'
 import SelectElement from '../elements/select-element'
+import { useAssignCaseManagerMutation } from '@/data/hooks/useCasesClient'
 
 interface Props {
     data: Client

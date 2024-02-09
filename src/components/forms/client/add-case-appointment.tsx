@@ -4,12 +4,12 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Client, TOption } from '@/constants/types'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
-import { useAddCaseAppointmentMutation, useAssignCaseManagerMutation } from '@/data/hooks/useClientsClient'
 import { useEffect, useState } from 'react'
 import SelectElement from '../elements/select-element'
 import DatePickerElement from '../elements/date-picker-element'
 import InputElement from '../elements/input-element'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { useAddCaseAppointmentMutation } from '@/data/hooks/useCasesClient'
 
 interface Props {
   data: Client
