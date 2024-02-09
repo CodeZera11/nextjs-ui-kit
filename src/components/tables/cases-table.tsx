@@ -13,7 +13,7 @@ import AssignCaseManagerForm from '../forms/client/assign-case-manager-form'
 import AddCaseAppointmentForm from '../forms/client/add-case-appointment'
 import TableDetailsDialog from '../dialogs/table-details-dialog'
 
-export default function ClientsTable() {
+export default function CasesTable() {
 
   const { mutate: deleteClient, isPending: isLoading } = useDeleteClientMutation()
 

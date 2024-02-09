@@ -157,6 +157,7 @@ export type User = {
   lastName: string
   role: UserRoleEnum
   phoneNumber: string
+  forcePasswordChange: boolean
   createdAt: string
   updatedAt: string
 }

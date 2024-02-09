@@ -22,12 +22,15 @@ export function useSignUp() {
 
       const { jwtToken, user } = data
 
-      const { firstName, lastName, email, role, phoneNumber } = user
+      const { firstName, lastName, email, role, phoneNumber, forcePasswordChange } = user
 
       localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, jwtToken)
-      const newUser = JSON.stringify({ firstName, lastName, email, role, phoneNumber })
+      const newUser = JSON.stringify({ firstName, lastName, email, role, phoneNumber, forcePasswordChange })
       localStorage.setItem(LocalStorageKeys.USER, newUser)
 
+      if (role === UserRoleEnum.CASE_MANAGER || role === UserRoleEnum.SUPER_ADMIN) {
+        router.push(PageRoutes.dashboard.admin.CLIENTS)
+      }
     },
     onError: (error: any) => {
       console.log({ toastError: error })
@@ -51,11 +54,15 @@ export function useSignIn() {
         title: 'Signed in successfully'
       })
       const { jwtToken, user } = data
-      const { firstName, lastName, email, role, id } = user
+      const { firstName, lastName, email, role, id, forcePasswordChange } = user
       localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, jwtToken)
-      const newUser = JSON.stringify({ firstName, lastName, email, role, id })
+      const newUser = JSON.stringify({ firstName, lastName, email, role, id, forcePasswordChange })
       localStorage.setItem(LocalStorageKeys.USER, newUser)
-      router.push(PageRoutes.dashboard.admin.CLIENTS)
+      if(role === UserRoleEnum.CLIENT) {
+        router.push(PageRoutes.dashboard.CASES)
+      } else {
+        router.push(PageRoutes.dashboard.admin.CLIENTS)
+      }
     }
   })
 }

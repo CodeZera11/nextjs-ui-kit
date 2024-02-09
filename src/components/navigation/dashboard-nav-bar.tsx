@@ -27,11 +27,11 @@ const navigationItems = [
     roles: [UserRoleEnum.SUPER_ADMIN, UserRoleEnum.CASE_MANAGER]
   },
   {
-    title: 'Requirements',
-    link: PageRoutes.dashboard.admin.REQUIREMENTS,
-    icon: <Files size={ICON_SIZE} />,
-    roles: [UserRoleEnum.SUPER_ADMIN]
-  }
+    title: 'Cases',
+    link: PageRoutes.dashboard.CASES,
+    icon: <UserIcon size={ICON_SIZE} />,
+    roles: [UserRoleEnum.CLIENT]
+  },
 ]
 
 interface NavigationLinkProps {
@@ -64,7 +64,7 @@ export default function NavBar({ user }: { user: User }) {
           {navigationItems
             .filter((item) => item.roles.includes(user.role))
             .map((item) => (
-              <NavigationLink key={item.title} link={item.link} title={item.title} icon={item.icon} />
+              <NavigationLink key={item.title} link={item?.link} title={item.title} icon={item.icon} />
             ))}
         </nav>
         <UserButton user={user} />
