@@ -14,10 +14,10 @@ import NavBar from '@/components/navigation/dashboard-nav-bar'
 
 const roleToPageMapping = {
   [UserRoleEnum.SUPER_ADMIN]: [
-    PageRoutes.dashboard.admin.CLIENTS, PageRoutes.dashboard.PROFILE,
+    PageRoutes.dashboard.admin.CLIENTS, PageRoutes.dashboard.PROFILE, PageRoutes.dashboard.CASES
   ],
   [UserRoleEnum.CASE_MANAGER]: [
-    PageRoutes.dashboard.admin.CLIENTS, PageRoutes.dashboard.PROFILE,
+    PageRoutes.dashboard.admin.CLIENTS, PageRoutes.dashboard.PROFILE, PageRoutes.dashboard.CASES
   ],
   [UserRoleEnum.CLIENT]: [
     PageRoutes.dashboard.PROFILE, PageRoutes.dashboard.CASES

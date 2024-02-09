@@ -51,7 +51,6 @@ export default function CasesTable() {
     },
     {
       id: 'appointments',
-      header: 'Appointments',
       cell: ({ row }) => {
         const data = row.original
         return (

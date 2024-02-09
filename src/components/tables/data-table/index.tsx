@@ -43,7 +43,7 @@ export function DataTable<TData, TValue>({
   facetKey,
   facetOptions,
   showFilters = true,
-  showPagination = false
+  showPagination = true
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
