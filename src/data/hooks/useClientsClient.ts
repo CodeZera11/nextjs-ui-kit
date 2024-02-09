@@ -93,3 +93,20 @@ export const useAssignCaseManagerMutation = () => {
     }
   })
 }
+
+export const useAddCaseAppointmentMutation = () => {
+  const router = useRouter()
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: clientsClient.addCaseAppointment,
+    onSuccess: (data: any) => {
+      toast({
+        variant: 'default',
+        title: 'Case Added Successfully'
+      })
+    },
+    onSettled: () => {
+      queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
+    }
+  })
+}

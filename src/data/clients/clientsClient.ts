@@ -32,7 +32,10 @@ export const clientsClient = {
   getCaseManagers: () => {
     return HttpClient.get<any>(`${ApiEndpoints.CLIENTS}/case-managers`)
   },
-  assignCaseManager: (data: {id: number, caseId: number, caseManagerId: number}) => {
+  assignCaseManager: (data: { id: number; caseId: number; caseManagerId: number }) => {
     return HttpClient.post<any>(`${ApiEndpoints.CLIENTS}/assign-case-manager`, data)
+  },
+  addCaseAppointment: (data: { id: number; caseId: number; date: Date; note?: string }) => {
+    return HttpClient.post<any>(`${ApiEndpoints.CLIENTS}/add-case-appointment`, data)
   }
 }

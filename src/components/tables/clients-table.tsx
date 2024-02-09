@@ -182,7 +182,6 @@ export default function ClientsTable() {
             }
             content={<AddClientCaseForm data={row.original} />}
           />
-
           <ConfirmDeleteDialog onDelete={() => { deleteClient(row.original.id) }} isLoading={isLoading} />
         </div>
       )
