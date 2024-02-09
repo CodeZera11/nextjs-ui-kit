@@ -71,7 +71,7 @@ export interface Client {
   firstName: string
   lastName: string
   email: string
-  clientCases: { nextCourtDate: string; id: number }[]
+  clientCases: Case[]
   phoneNumber: string
   dateOfBirth: string
   supervisionTier: string
@@ -85,6 +85,14 @@ export interface Client {
   role: UserRoleEnum
   createdAt: string
   updatedAt: string
+}
+
+export interface Case {
+  id: number;
+  type: string;
+  charge: string;
+  chargeDescription: string;
+  docketNumber: string;
 }
 
 export interface Property {

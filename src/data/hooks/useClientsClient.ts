@@ -17,7 +17,7 @@ export function useGetClients() {
 
 export function useGetCaseManagers() {
   const { isLoading, data } = useQuery({
-    queryKey: [ApiEndpoints.CLIENTS],
+    queryKey: [`${ApiEndpoints.CLIENTS}/case-managers`],
     queryFn: () => clientsClient.getCaseManagers()
   })
 

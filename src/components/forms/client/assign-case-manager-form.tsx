@@ -21,12 +21,15 @@ const formSchema = z.object({
     })
 })
 
+type TCaseManager = z.infer<typeof formSchema>
+
 const AssignCaseManagerForm = ({ data }: Props) => {
+
+    const { data: caseManagersData } = useGetCaseManagers();
 
     const [caseManagersOptions, setCaseManagersOptions] = useState<TOption[]>();
     const [caseOptions, setCaseOptions] = useState<TOption[]>();
 
-    const { data: caseManagersData } = useGetCaseManagers()
     const { mutate: assignCaseManager, isPending: isLoading } = useAssignCaseManagerMutation()
 
     useEffect(() => {
@@ -40,7 +43,7 @@ const AssignCaseManagerForm = ({ data }: Props) => {
             })
             const caseOptions = data?.clientCases?.map((clientCase) => {
                 return {
-                    label: clientCase.nextCourtDate,
+                    label: `${clientCase.docketNumber} - ${clientCase.type}`,
                     value: clientCase.id.toString()
                 }
             })
@@ -49,11 +52,11 @@ const AssignCaseManagerForm = ({ data }: Props) => {
         }
     }, [caseManagersData, data?.clientCases])
 
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm<TCaseManager>({
         resolver: zodResolver(formSchema),
     })
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
+    function onSubmit(values: TCaseManager) {
         assignCaseManager({
             id: data?.id,
             caseId: Number(values.caseId),

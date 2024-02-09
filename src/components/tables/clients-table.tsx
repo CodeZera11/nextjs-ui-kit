@@ -74,42 +74,6 @@ export default function ClientsTable() {
       header: ({ column }) => <DataTableColumnHeader column={column} title="Attorney Phone" />
     },
     {
-      id: 'clientCases',
-      header: 'Cases',
-      cell: ({ row }) => {
-        const data = row.original
-        return (
-          <>
-            {data?.clientCases?.length > 0 && (
-              <div className="flex items-center gap-2">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline">View Case Dates</Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[800px]">
-                    <DialogHeader>
-                      <DialogTitle>Client Case Dates</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid max-h-[500px] grid-cols-2 gap-4 overflow-y-auto py-4">
-                      {data.clientCases.map((clientCase, i) => {
-                        return (
-                          <Card key={i}>
-                            <CardHeader>
-                              <CardTitle>{new Date(clientCase.nextCourtDate).toLocaleDateString()}</CardTitle>
-                            </CardHeader>
-                          </Card>
-                        )
-                      })}
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
-            )}
-          </>
-        )
-      }
-    },
-    {
       accessorKey: 'createdAt',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
       cell: ({ row }) => {
@@ -126,20 +90,66 @@ export default function ClientsTable() {
       }
     },
     {
+      id: 'clientCases',
+      header: 'Cases',
+      cell: ({ row }) => {
+        const data = row.original
+        return (
+          <>
+            {data?.clientCases?.length > 0 && (
+              <div className="flex items-center gap-2">
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button variant="outline">View Case Details</Button>
+                  </DialogTrigger>
+                  <DialogContent className="sm:max-w-[800px]">
+                    <DialogHeader>
+                      <DialogTitle>Case Details</DialogTitle>
+                    </DialogHeader>
+                    <div className="grid max-h-[500px] grid-cols-2 gap-4 overflow-y-auto py-4">
+                      {data.clientCases.map((clientCase, i) => {
+                        return (
+                          <Card key={i}>
+                            <CardHeader>
+                              <CardTitle>{`${clientCase?.docketNumber} - ${clientCase?.type}`}</CardTitle>
+                            </CardHeader>
+                          </Card>
+                        )
+                      })}
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
+          </>
+        )
+      }
+    },
+    {
+      id: 'assignCaseManager',
+      cell: ({ row }) => {
+        return (
+          <>
+            {row?.original?.clientCases?.length > 0 && (
+              <ConfirmActionDialog
+                title="Assign Case Manager"
+                anchor={
+                  <Button size="sm">
+                    Assign Case Manager
+                  </Button>
+                }
+                content={<AssignCaseManagerForm data={row.original} />}
+              />
+            )}
+          </>
+        )
+      }
+    },
+    {
       id: 'actions',
       enableHiding: false,
       cell: ({ row }) => (
         <div className="flex items-center gap-2">
-          <ConfirmActionDialog
-            title="Assign a Case Manager"
-            anchor={
-              <Button size="sm">
-                Assign Case Manager
-              </Button>
-            }
-            content={<AssignCaseManagerForm data={row.original} />}
-          />
-
           <ConfirmActionDialog
             title="Add Case"
             anchor={
