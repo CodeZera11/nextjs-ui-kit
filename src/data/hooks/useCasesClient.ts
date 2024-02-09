@@ -32,23 +32,6 @@ export const useCreateCaseMutation = () => {
   })
 }
 
-// export const useAddCaseMutation = () => {
-//   const router = useRouter()
-//   const queryClient = useQueryClient()
-//   return useMutation({
-//     mutationFn: casesClient.addCase,
-//     onSuccess: (data: any) => {
-//       toast({
-//         variant: 'default',
-//         title: 'Case Added Successfully'
-//       })
-//     },
-//     onSettled: () => {
-//       queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
-//     }
-//   })
-// }
-
 export const useAssignCaseManagerMutation = () => {
   const router = useRouter()
   const queryClient = useQueryClient()
@@ -83,4 +66,13 @@ export const useAddCaseAppointmentMutation = () => {
       queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
     }
   })
+}
+
+export function useGetOneCase(id: number) {
+  const { data, isFetching, isPending } = useQuery({
+    queryKey: [`${ApiEndpoints.CASES}-${id}`],
+    queryFn: () => casesClient.getById({ id })
+  })
+
+  return { data: data?.data, loading: isPending, isFetching }
 }

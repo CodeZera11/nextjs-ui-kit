@@ -7,6 +7,8 @@ import { useGetCases } from '@/data/hooks/useCasesClient'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
 import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
+import Link from 'next/link'
+import { PageRoutes } from '@/constants/page-routes'
 
 export default function CasesTable() {
 
@@ -87,6 +89,16 @@ export default function CasesTable() {
         )
       }
     },
+    {
+      id: 'viewCase',
+      cell: ({ row }) => {
+        return (
+          <Link href={`${PageRoutes.dashboard.CASES}/${row.original.id}`}>
+            <Button variant="secondary" size="sm">View Case</Button>
+          </Link>
+        )
+      }
+    }
   ]
 
   const { loading, data } = useGetCases()

@@ -7,16 +7,16 @@ export function useCreateCommentMutation(onMessageSentCallback: () => void) {
   return useMutation({
     mutationFn: commentsClient.create,
     onSuccess: (response: any) => {
-      queryClient.refetchQueries({ queryKey: [`${ApiEndpoints.COMMENTS_BY_MORTGAGE}`] })
+      queryClient.refetchQueries({ queryKey: [`${ApiEndpoints.COMMENTS_BY_CASE}`] })
       onMessageSentCallback()
     }
   })
 }
 
-export function useGetCommentsByMortgage(mortgageId: number) {
+export function useGetCommentsByCase(caseId: number) {
   const { isLoading, data } = useQuery({
-    queryKey: [`${ApiEndpoints.COMMENTS_BY_MORTGAGE}`],
-    queryFn: () => commentsClient.getCommentsByMortgage(mortgageId),
+    queryKey: [`${ApiEndpoints.COMMENTS_BY_CASE}`],
+    queryFn: () => commentsClient.getCommentsByCase(caseId),
     refetchInterval: 5000
   })
 

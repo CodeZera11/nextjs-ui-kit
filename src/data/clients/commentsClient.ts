@@ -5,10 +5,8 @@ import { ApiEndpoints } from '@/constants/api'
 import HttpClient from '@/lib/http-client'
 
 export interface CreateCommentInput {
-  title: string
-  mortgageId: number
+  caseId: number
   message?: string
-  attachments?: string[]
 }
 
 export interface Comment extends CreateCommentInput {
@@ -17,7 +15,7 @@ export interface Comment extends CreateCommentInput {
 
 export const commentsClient = {
   ...crudFactory<CreateCommentInput[], QueryOptions, CreateCommentInput>(ApiEndpoints.COMMENTS),
-  getCommentsByMortgage: (mortgageId: number) => {
-    return HttpClient.get<Comment[]>(`${ApiEndpoints.COMMENTS_BY_MORTGAGE}/${mortgageId}`)
+  getCommentsByCase: (caseId: number) => {
+    return HttpClient.get<Comment[]>(`${ApiEndpoints.COMMENTS_BY_MORTGAGE}/${caseId}`)
   }
 }

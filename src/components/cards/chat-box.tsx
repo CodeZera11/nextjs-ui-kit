@@ -26,14 +26,14 @@ const formSchema = z.object({
 interface Props {
   mortgageId: number
   userDetails:
-    | User
-    | {
-        firstName: string
-        lastName: string
-        role: UserRoleEnum
-        email: string
-        id: number
-      }
+  | User
+  | {
+    firstName: string
+    lastName: string
+    role: UserRoleEnum
+    email: string
+    id: number
+  }
 }
 const ChatBox = ({ mortgageId, userDetails }: Props) => {
   const [chatOpen, setChatOpen] = useState(false)
@@ -50,7 +50,7 @@ const ChatBox = ({ mortgageId, userDetails }: Props) => {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     sendComment({
-      mortgageId: Number(mortgageId),
+      caseId: Number(mortgageId),
       attachments: values.attachment ? [values.attachment] : [],
       message: '',
       ...values

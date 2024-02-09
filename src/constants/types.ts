@@ -91,12 +91,20 @@ export interface Case {
   id: number
   type?: string
   charge?: string
+  note?: string
   chargeDescription?: string
   docketNumber?: string
   caseManagerId?: number
-  appointments?: { date?: string; note?: string; status?: string }[]
+  appointments?: Appointment[]
   createdAt: string
   updatedAt: string
+}
+
+export interface Appointment {
+  id: number
+  date: string
+  note?: string
+  status?: string
 }
 
 export interface Property {
