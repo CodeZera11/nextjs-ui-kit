@@ -98,27 +98,6 @@ export default function ClientsTable() {
           <>
             {data?.clientCases?.length > 0 && (
               <TableDetailsDialog data={data} loading={isLoading} />
-              // <Dialog>
-              //   <DialogTrigger asChild>
-              //     <Button variant="outline">View Case Details</Button>
-              //   </DialogTrigger>
-              //   <DialogContent className="sm:max-w-screen-2xl">
-              //     <DialogHeader>
-              //       <DialogTitle>Case Details</DialogTitle>
-              //     </DialogHeader>
-              //     <div className="grid max-h-[500px] grid-cols-2 gap-4 overflow-y-auto py-4">
-              //       {data.clientCases.map((clientCase, i) => {
-              //         return (
-              //           <Card key={i}>
-              //             <CardHeader>
-              //               <CardTitle>{`${clientCase?.docketNumber} - ${clientCase?.type}`}</CardTitle>
-              //             </CardHeader>
-              //           </Card>
-              //         )
-              //       })}
-              //     </div>
-              //   </DialogContent>
-              // </Dialog>
             )}
           </>
         )

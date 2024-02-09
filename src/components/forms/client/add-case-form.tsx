@@ -45,11 +45,6 @@ const AddClientCaseForm = ({ data }: Props) => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4 p-4">
-                {/* <DatePickerElement
-                    custom
-                    name="nextCourtDate"
-                    label="Next Court Date"
-                /> */}
                 <InputElement name="type" label="Type" />
                 <InputElement name="charge" label="Charge" />
                 <InputElement name="chargeDescription" label="Charge Description" />

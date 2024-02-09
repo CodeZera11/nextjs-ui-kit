@@ -7,6 +7,7 @@ export const ApiEndpoints = {
   PROPERTIES: API_ROOT + '/properties',
   REQUIREMENTS: API_ROOT + '/requirements',
   CLIENTS: API_ROOT + '/clients',
+  CASES: API_ROOT + '/cases',
   SEARCH: API_ROOT + '/properties/search',
   FILES: API_ROOT + '/files',
   SIGNIN: API_ROOT + '/auth/sign-in',
@@ -22,4 +23,4 @@ export const ApiEndpoints = {
   RESET_PASSWORD: API_ROOT + '/auth/reset-password'
 }
 
-export const MAX_NUMBER = 999999999;
+export const MAX_NUMBER = 999999999

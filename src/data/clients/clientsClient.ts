@@ -27,15 +27,15 @@ export interface CreateClientInput {
 export const clientsClient = {
   ...crudFactory<Client, QueryOptions, CreateClientInput>(ApiEndpoints.CLIENTS),
   addCase: (caseDetails: any) => {
-    return HttpClient.post<any>(`${ApiEndpoints.CLIENTS}/add-case`, caseDetails)
+    return HttpClient.post<any>(`${ApiEndpoints.CASES}`, caseDetails)
   },
   getCaseManagers: () => {
     return HttpClient.get<any>(`${ApiEndpoints.CLIENTS}/case-managers`)
   },
   assignCaseManager: (data: { id: number; caseId: number; caseManagerId: number }) => {
-    return HttpClient.post<any>(`${ApiEndpoints.CLIENTS}/assign-case-manager`, data)
+    return HttpClient.post<any>(`${ApiEndpoints.CASES}/assign-case-manager`, data)
   },
   addCaseAppointment: (data: { id: number; caseId: number; date: Date; note?: string }) => {
-    return HttpClient.post<any>(`${ApiEndpoints.CLIENTS}/add-case-appointment`, data)
+    return HttpClient.post<any>(`${ApiEndpoints.CASES}/add-case-appointment`, data)
   }
 }
