@@ -13,6 +13,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Card, CardHeader, CardTitle } from '../ui/card'
 import AssignCaseManagerForm from '../forms/client/assign-case-manager-form'
 import AddCaseAppointmentForm from '../forms/client/add-case-appointment'
+import TableDetailsDialog from '../dialogs/table-details-dialog'
 
 export default function ClientsTable() {
 
@@ -98,29 +99,28 @@ export default function ClientsTable() {
         return (
           <>
             {data?.clientCases?.length > 0 && (
-              <div className="flex items-center gap-2">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button variant="outline">View Case Details</Button>
-                  </DialogTrigger>
-                  <DialogContent className="sm:max-w-[800px]">
-                    <DialogHeader>
-                      <DialogTitle>Case Details</DialogTitle>
-                    </DialogHeader>
-                    <div className="grid max-h-[500px] grid-cols-2 gap-4 overflow-y-auto py-4">
-                      {data.clientCases.map((clientCase, i) => {
-                        return (
-                          <Card key={i}>
-                            <CardHeader>
-                              <CardTitle>{`${clientCase?.docketNumber} - ${clientCase?.type}`}</CardTitle>
-                            </CardHeader>
-                          </Card>
-                        )
-                      })}
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              </div>
+              <TableDetailsDialog data={data} loading={isLoading} />
+              // <Dialog>
+              //   <DialogTrigger asChild>
+              //     <Button variant="outline">View Case Details</Button>
+              //   </DialogTrigger>
+              //   <DialogContent className="sm:max-w-screen-2xl">
+              //     <DialogHeader>
+              //       <DialogTitle>Case Details</DialogTitle>
+              //     </DialogHeader>
+              //     <div className="grid max-h-[500px] grid-cols-2 gap-4 overflow-y-auto py-4">
+              //       {data.clientCases.map((clientCase, i) => {
+              //         return (
+              //           <Card key={i}>
+              //             <CardHeader>
+              //               <CardTitle>{`${clientCase?.docketNumber} - ${clientCase?.type}`}</CardTitle>
+              //             </CardHeader>
+              //           </Card>
+              //         )
+              //       })}
+              //     </div>
+              //   </DialogContent>
+              // </Dialog>
             )}
           </>
         )
@@ -190,5 +190,5 @@ export default function ClientsTable() {
 
   const { loading, data } = useGetClients()
 
-  return <DataTable columns={columns} data={data ?? []} isLoading={loading} filterKey="name" />
+  return <DataTable columns={columns} data={data ?? []} isLoading={loading} filterKey="firstName" />
 }

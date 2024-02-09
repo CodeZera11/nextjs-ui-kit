@@ -94,6 +94,8 @@ export interface Case {
   chargeDescription?: string
   docketNumber?: string
   caseManagerId?: number
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Property {
