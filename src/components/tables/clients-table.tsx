@@ -117,7 +117,7 @@ export default function ClientsTable() {
                     Assign Case Manager
                   </Button>
                 }
-                content={<AssignCaseManagerForm data={data} />}
+              content={<AssignCaseManagerForm data={data} />}
               />
             )}
           </>

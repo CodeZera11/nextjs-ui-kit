@@ -94,6 +94,7 @@ export interface Case {
   chargeDescription?: string
   docketNumber?: string
   caseManagerId?: number
+  appointments?: { date?: string; note?: string; status?: string }[]
   createdAt: string
   updatedAt: string
 }
