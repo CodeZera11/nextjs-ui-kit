@@ -25,7 +25,7 @@ const UserButton = ({ user }: { user: User }) => {
       <DropdownMenuTrigger asChild>
         <Avatar className="h-9 w-9 cursor-pointer">
           <AvatarImage alt="Profile avatar" src="/placeholder-avatar.jpg" />
-          <AvatarFallback>{user?.firstName?.charAt(0) + user?.lastName?.charAt(0)}</AvatarFallback>
+          <AvatarFallback className='uppercase text-[#252A2C]'>{user?.firstName?.charAt(0) + user?.lastName?.charAt(0)}</AvatarFallback>
           <span className="sr-only">Toggle user menu</span>
         </Avatar>
       </DropdownMenuTrigger>

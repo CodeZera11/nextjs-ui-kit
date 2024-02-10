@@ -1,4 +1,3 @@
-import { MortgageStatusEnum } from '@/constants/enums'
 import {
   ArrowDownIcon,
   ArrowRightIcon,

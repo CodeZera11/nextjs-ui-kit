@@ -14,22 +14,13 @@ import NavBar from '@/components/navigation/dashboard-nav-bar'
 
 const roleToPageMapping = {
   [UserRoleEnum.SUPER_ADMIN]: [
-    PageRoutes.admin.USERS,
-    PageRoutes.admin.REQUIREMENTS,
-    PageRoutes.dashboard.PROFILE,
-    PageRoutes.dashboard.MORTGAGES,
-    PageRoutes.dashboard.admin.CLIENTS
+    PageRoutes.dashboard.admin.CLIENTS, PageRoutes.dashboard.PROFILE, PageRoutes.dashboard.CASES
   ],
   [UserRoleEnum.CASE_MANAGER]: [
-    PageRoutes.admin.USERS,
-    PageRoutes.admin.REQUIREMENTS,
-    PageRoutes.dashboard.PROFILE,
-    PageRoutes.dashboard.MORTGAGES,
-    PageRoutes.dashboard.admin.CLIENTS
+    PageRoutes.dashboard.admin.CLIENTS, PageRoutes.dashboard.PROFILE, PageRoutes.dashboard.CASES
   ],
   [UserRoleEnum.CLIENT]: [
-    PageRoutes.dashboard.MORTGAGES,
-    PageRoutes.dashboard.PROFILE,
+    PageRoutes.dashboard.PROFILE, PageRoutes.dashboard.CASES
   ],
 }
 
@@ -55,6 +46,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.push(PageRoutes.SIGNIN)
     return null
   }
+
+  // if (userData.forcePasswordChange) {
+  //   router.push(PageRoutes.FORGOT_PASSWORD)
+  //   return null
+  // }
 
   const allowedPages = roleToPageMapping[userData.role]
 

@@ -1,29 +1,30 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from './data-table'
-import { Clients } from '@/constants/types'
-import { useDeleteRequirementMutation, useGetRequirements } from '@/data/hooks/useRequirementsClient'
-import Link from 'next/link'
-import { PageRoutes } from '@/constants/page-routes'
-import { FileEdit } from 'lucide-react'
-import ConfirmDeleteDialog from '../dialogs/confirm-delete-dialog'
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog'
-import { Card, CardHeader, CardTitle } from '../ui/card'
+import { Client } from '@/constants/types'
 import { Button } from '../ui/button'
 import { DataTableColumnHeader } from './data-table/data-table-column-header'
-import { useGetClients } from '@/data/hooks/useClientsClient'
+import { useDeleteClientMutation, useGetClients } from '@/data/hooks/useClientsClient'
+import ConfirmDeleteDialog from '../dialogs/confirm-delete-dialog'
+import { Badge } from '../ui/badge'
+import ConfirmActionDialog from '../dialogs/confirm-action-dialog'
+import AddClientCaseForm from '../forms/client/add-case-form'
+import AssignCaseManagerForm from '../forms/client/assign-case-manager-form'
+import AddCaseAppointmentForm from '../forms/client/add-case-appointment'
+import TableDetailsDialog from '../dialogs/table-details-dialog'
 
 export default function ClientsTable() {
-  const { mutate: deleteRequirement, isPending: isLoading } = useDeleteRequirementMutation()
 
-  const columns: ColumnDef<Clients>[] = [
+  const { mutate: deleteClient, isPending: isLoading } = useDeleteClientMutation()
+
+  const columns: ColumnDef<Client>[] = [
     {
       accessorKey: 'id',
       header: ({ column }) => <DataTableColumnHeader column={column} title="ID" />
     },
     {
       accessorKey: 'firstName',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="firstName" />
+      header: ({ column }) => <DataTableColumnHeader column={column} title="First Name" />
     },
     {
       accessorKey: 'lastName',
@@ -36,6 +37,13 @@ export default function ClientsTable() {
     {
       accessorKey: 'phoneNumber',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Phone Number" />
+    },
+    {
+      accessorKey: 'role',
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
+      cell: ({ row }) => {
+        return <Badge>{row.original.role}</Badge>
+      }
     },
     {
       accessorKey: 'dateOfBirth',
@@ -74,16 +82,84 @@ export default function ClientsTable() {
       }
     },
     {
+      accessorKey: 'updatedAt',
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Updated At" />,
+      cell: ({ row }) => {
+        const createdAt = row.original.createdAt
+        return new Date(createdAt).toLocaleDateString()
+      }
+    },
+    {
+      id: 'clientCases',
+      header: 'Cases',
+      cell: ({ row }) => {
+        const data = row.original
+        return (
+          <>
+            {data?.clientCases?.length > 0 && (
+              <TableDetailsDialog data={data} loading={isLoading} />
+            )}
+          </>
+        )
+      }
+    },
+    {
+      id: 'assignCaseManager',
+      cell: ({ row }) => {
+        const data = row?.original;
+        return (
+          <>
+            {data?.clientCases?.length > 0 && (
+              <ConfirmActionDialog
+                title="Assign Case Manager"
+                anchor={
+                  <Button size="sm">
+                    Assign Case Manager
+                  </Button>
+                }
+              content={<AssignCaseManagerForm data={data} />}
+              />
+            )}
+          </>
+        )
+      }
+    },
+    {
+      id: 'addAppointment',
+      cell: ({ row }) => {
+        const data = row?.original;
+        return (
+          <>
+            {data?.clientCases?.length > 0 && (
+              <ConfirmActionDialog
+                title="Add Appointment"
+                anchor={
+                  <Button size="sm" variant="secondary">
+                    Add Appointment
+                  </Button>
+                }
+                content={<AddCaseAppointmentForm data={data} />}
+              />
+            )}
+          </>
+        )
+      }
+    },
+    {
       id: 'actions',
       enableHiding: false,
       cell: ({ row }) => (
-        <div className="flex items-center">
-          <Link href={PageRoutes.dashboard.admin.REQUIREMENTS_EDIT(row.original.id)}>
-            <Button variant="ghost">
-              <FileEdit size={17} color="black" />
-            </Button>
-          </Link>
-          <ConfirmDeleteDialog onDelete={() => deleteRequirement(row.original.id)} isLoading={isLoading} />
+        <div className="flex items-center gap-2">
+          <ConfirmActionDialog
+            title="Add Case"
+            anchor={
+              <Button variant="secondary" size="sm">
+                Add Case
+              </Button>
+            }
+            content={<AddClientCaseForm data={row.original} />}
+          />
+          <ConfirmDeleteDialog onDelete={() => { deleteClient(row.original.id) }} isLoading={isLoading} />
         </div>
       )
     }
@@ -91,5 +167,5 @@ export default function ClientsTable() {
 
   const { loading, data } = useGetClients()
 
-  return <DataTable columns={columns} data={data ?? []} isLoading={loading} filterKey="name" />
+  return <DataTable columns={columns} data={data ?? []} isLoading={loading} filterKey="firstName" />
 }

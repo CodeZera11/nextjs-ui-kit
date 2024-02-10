@@ -51,15 +51,6 @@ const formSchema = z.object({
   attorneyPhone: z.string({
     required_error: 'Please enter your attorney phone!'
   }).optional(),
-  charge: z.string({
-    required_error: 'Please enter your charge!'
-  }).optional(),
-  chargeDescription: z.string({
-    required_error: 'Please enter your charge description!'
-  }).optional(),
-  docketNumber: z.string({
-    required_error: 'Please enter your docket number!'
-  }).optional(),
   password: z
     .string({
       required_error: 'Please enter a password!'
@@ -123,9 +114,6 @@ const Page = () => {
                 <InputElement name="attorneyName" label="Attorney Name" />
                 <CustomInputElement name="attorneyEmail" label="Attorney Email" type="email" />
                 <PhoneNumberInputElement name='attorneyPhone' label='Attorney Phone Number' />
-                <InputElement name="charge" label="Charge" />
-                <InputElement name="chargeDescription" label="Charge Description" />
-                <InputElement name="docketNumber" label="Docket Number" />
               </div>
               <CustomInputElement name="password" label="Password" type="password" />
               <Button disabled={isLoading} className="w-full" type="submit">

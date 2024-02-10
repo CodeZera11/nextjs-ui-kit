@@ -31,6 +31,8 @@ interface DataTableProps<TData, TValue> {
   filterKey?: string
   facetKey?: string
   facetOptions?: FacetOption[]
+  showFilters?: boolean
+  showPagination?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -39,7 +41,9 @@ export function DataTable<TData, TValue>({
   isLoading = false,
   filterKey,
   facetKey,
-  facetOptions
+  facetOptions,
+  showFilters = true,
+  showPagination = true
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
@@ -85,14 +89,14 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar
+      {showFilters && <DataTableToolbar
         date={date}
         setDate={setDate}
         table={table}
         filterKey={filterKey ?? 'email'}
         facetKey={facetKey ?? 'status'}
         facetOptions={facetOptions}
-      />
+      />}
       <div className="rounded-md border">
         <Table>
           <TableHeader>
@@ -137,7 +141,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <DataTablePagination table={table} />
+      {showPagination && <DataTablePagination table={table} />}
     </div>
   )
 }

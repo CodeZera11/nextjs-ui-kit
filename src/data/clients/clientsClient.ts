@@ -1,27 +1,32 @@
-import { Clients, QueryOptions, RequirementApplication, User } from '@/constants/types'
+import { Client, QueryOptions } from '@/constants/types'
 import { crudFactory } from '@/lib/crud-factory'
 
 import { ApiEndpoints } from '@/constants/api'
-import { IncomeProfileEnum, ResidenceTypeEnum } from '@/constants/enums'
+import HttpClient from '@/lib/http-client'
 
-export interface CreateClientInput extends Clients {
-  name: string
-  incomeProfile: IncomeProfileEnum
-  residenceType: ResidenceTypeEnum
-  preApprovalFee: number
-  processingFee: number
-  rate: number
-  lifeInsurance: number
-  propertyInsurance: number
-  valuationFee: number
-  requiredDocuments: {
-    id?: number
-    name: string
-    documentType: any // Replace 'any' with the actual type for documentType
-    isMandatory: boolean
-  }[]
+export interface CreateClientInput {
+  firstName: string
+  lastName: string
+  email: string
+  phoneNumber: string
+  dateOfBirth: Date
+  supervisionTier?: string
+  supervisionLevel?: string
+  attorneyName?: string
+  attorneyEmail?: string
+  attorneyPhone?: string
+  charge?: string
+  chargeDescription?: string
+  docketNumber?: string
+  address?: string
+  courtAddress?: string
+  communitySpaceAddress?: string
+  caseManagerSchedule?: string
 }
 
 export const clientsClient = {
-  ...crudFactory<Clients, QueryOptions, CreateClientInput>(ApiEndpoints.CLIENTS)
+  ...crudFactory<Client, QueryOptions, CreateClientInput>(ApiEndpoints.CLIENTS),
+  getCaseManagers: () => {
+    return HttpClient.get<any>(`${ApiEndpoints.CLIENTS}/case-managers`)
+  }
 }
