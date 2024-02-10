@@ -110,7 +110,7 @@ export default function ClientsTable() {
                     Assign Case Manager
                   </Button>
                 }
-              content={<AssignCaseManagerForm data={data} />}
+                content={<AssignCaseManagerForm data={data} />}
               />
             )}
           </>
@@ -131,6 +131,7 @@ export default function ClientsTable() {
                     Add Appointment
                   </Button>
                 }
+                className='sm:max-w-[600px]'
                 content={<AddCaseAppointmentForm data={data} />}
               />
             )}

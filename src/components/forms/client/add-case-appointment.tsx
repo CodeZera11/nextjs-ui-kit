@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import SelectElement from '../elements/select-element'
 import DatePickerElement from '../elements/date-picker-element'
-import InputElement from '../elements/input-element'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAddCaseAppointmentMutation } from '@/data/hooks/useCasesClient'
+import { AppointmentTypeOptions } from '@/constants/appointment'
+import TextAreaElement from '../elements/text-area-element'
 
 interface Props {
   data: Client
@@ -31,7 +31,8 @@ type TCaseAppointment = z.infer<typeof formSchema>
 
 const AddCaseAppointmentForm = ({ data }: Props) => {
 
-  const [caseOptions, setCaseOptions] = useState<TOption[]>()
+  const [caseOptions, setCaseOptions] = useState<TOption[]>();
+  const [appointments, setAppointments] = useState<number>(1);
 
   const { mutate: addCaseAppointment, isPending: isLoading } = useAddCaseAppointmentMutation()
 
@@ -58,7 +59,6 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
       date: values.appointmentDate,
       note: values.note
     })
-    // console.log({ values })
   }
 
   const currentCase = form.watch('caseId')
@@ -70,13 +70,27 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
           <div className='mb-5'>
             <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
           </div>
-          <DatePickerElement custom name='appointmentDate' label='Appointment Date' disabled={!currentCase} />
+          <div className='flex items-center justify-between gap-2'>
+            <div className='flex-1'>
+              <DatePickerElement custom name='appointmentDate' label='Appointment Date' disabled={!currentCase} />
+            </div>
 
-          <InputElement name="note" label="Note" isDisabled={!currentCase} />
+            <div className='flex-1'>
+              <SelectElement label='Type' name='type' options={AppointmentTypeOptions} placeholder='Please select a type' />
+            </div>
+          </div>
+
+          <TextAreaElement
+            name="note"
+            label={'Note'}
+            isDisabled={!currentCase}
+            placeholder='Enter a note here'
+          />
 
           <Button disabled={isLoading} type="submit" className="w-full">
             {isLoading ? 'Saving...' : 'Save changes'}
           </Button>
+          <Button className='w-fullflex items-end' variant="link" onClick={() => setAppointments(appointments + 1)}>Add Appointment</Button>
         </form>
       </Form>
     </div>

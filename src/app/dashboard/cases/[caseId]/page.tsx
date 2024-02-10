@@ -147,7 +147,7 @@ const Page = ({ params: { caseId } }: Props) => {
                             </Card>
                             <div className='space-y-2'>
                                 <h2 className='text-xl font-semibold'>Appointments</h2>
-                                <DataTable columns={columns} data={data?.appointments ?? []} isLoading={isFetching} filterKey="status" showPagination={false} facetOptions={appointmentStatusFilterOptions} facetKey='status' />
+                                <DataTable columns={columns} data={data?.appointments ?? []} isLoading={isFetching} filterKey="type" showPagination={false} facetOptions={appointmentStatusFilterOptions} facetKey='status' />
                             </div>
                         </div>
                     </div>

@@ -72,7 +72,7 @@ const TableDetailsDialog = ({ data, loading }: Props) => {
                 <DialogHeader>
                     <DialogTitle>List of Cases</DialogTitle>
                 </DialogHeader>
-                <DataTable columns={columns} data={data?.clientCases ?? []} isLoading={loading} filterKey="firstName" />
+                <DataTable columns={columns} data={data?.clientCases ?? []} isLoading={loading} filterKey="docketNumber" />
             </DialogContent>
         </Dialog>
     )

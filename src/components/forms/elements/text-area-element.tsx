@@ -9,19 +9,20 @@ interface Props {
   description?: string
   placeholder?: string
   className?: string
+  isDisabled?: boolean
 }
 
-const TextAreaElement = ({ name, label, description, placeholder, className }: Props) => {
+const TextAreaElement = ({ name, label, description, placeholder, className, isDisabled = false }: Props) => {
   const { control } = useFormContext()
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className='flex flex-col'>
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-            <Textarea placeholder={placeholder} className={className} {...field} />
+            <Textarea placeholder={placeholder} className={className} {...field} disabled={isDisabled} />
           </FormControl>
           {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />

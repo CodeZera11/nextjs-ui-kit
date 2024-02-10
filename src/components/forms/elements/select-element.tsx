@@ -20,7 +20,7 @@ const SelectElement = ({ name, label, description, options, placeholder, disable
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className='flex flex-col'>
           {label && <FormLabel>{label}</FormLabel>}
           <Select onValueChange={field.onChange} defaultValue={field.value} disabled={disabled}>
             <FormControl>
