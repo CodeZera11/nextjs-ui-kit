@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { ApiEndpoints } from '@/constants/api'
-import { requirementsClient } from '../clients/requirementsClient'
 import { toast } from '@/components/ui/use-toast'
 import { useRouter } from 'next/navigation'
 import { PageRoutes } from '@/constants/page-routes'
