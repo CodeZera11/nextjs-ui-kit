@@ -47,10 +47,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     return null
   }
 
-  // if (userData.forcePasswordChange) {
-  //   router.push(PageRoutes.FORGOT_PASSWORD)
-  //   return null
-  // }
+  if (userData.forcePasswordChange) {
+    router.push(`${PageRoutes.FORGOT_PASSWORD}?email=${userData.email}`)
+    return null
+  }
 
   const allowedPages = roleToPageMapping[userData.role]
 

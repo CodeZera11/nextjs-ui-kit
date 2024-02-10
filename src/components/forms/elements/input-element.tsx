@@ -20,7 +20,7 @@ const InputElement = ({ name, label, description, placeholder, isDisabled = fals
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem>
+        <FormItem className='flex flex-col'>
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <Input type="text" placeholder={placeholder} {...field} disabled={isDisabled} />

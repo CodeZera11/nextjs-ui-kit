@@ -7,9 +7,10 @@ import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
 import SelectElement from '../elements/select-element'
 import DatePickerElement from '../elements/date-picker-element'
-import InputElement from '../elements/input-element'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useAddCaseAppointmentMutation } from '@/data/hooks/useCasesClient'
+import { AppointmentTypeOptions } from '@/constants/appointment'
+import TextAreaElement from '../elements/text-area-element'
+import { AppointmentTypeEnum } from '@/constants/enums'
 
 interface Props {
   data: Client
@@ -19,19 +20,26 @@ const formSchema = z.object({
   caseId: z.string({
     required_error: 'Please select a case!'
   }),
-  appointmentDate: z.date({
-    required_error: 'Please select a appointment date!'
-  }),
-  note: z.string({
-    required_error: 'Please enter a type!'
-  }).optional(),
+  caseDetails: z.array(
+    z.object({
+      note: z.string({
+        required_error: 'Please enter a type!'
+      }).optional(),
+      appointmentDate: z.date({
+        required_error: 'Please select a appointment date!'
+      }),
+      type: z.nativeEnum(AppointmentTypeEnum, { required_error: "Please select a type!" })
+    })
+  )
 })
 
 type TCaseAppointment = z.infer<typeof formSchema>
 
 const AddCaseAppointmentForm = ({ data }: Props) => {
 
-  const [caseOptions, setCaseOptions] = useState<TOption[]>()
+  const [caseOptions, setCaseOptions] = useState<TOption[]>();
+  const [appointments, setAppointments] = useState(1);
+
 
   const { mutate: addCaseAppointment, isPending: isLoading } = useAddCaseAppointmentMutation()
 
@@ -55,10 +63,9 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
     addCaseAppointment({
       id: data?.id,
       caseId: Number(values.caseId),
-      date: values.appointmentDate,
-      note: values.note
+      caseDetails: values.caseDetails
     })
-    // console.log({ values })
+    console.log({ values })
   }
 
   const currentCase = form.watch('caseId')
@@ -70,13 +77,35 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
           <div className='mb-5'>
             <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
           </div>
-          <DatePickerElement custom name='appointmentDate' label='Appointment Date' disabled={!currentCase} />
+          <div className='space-y-2 max-h-[20rem] overflow-y-scroll'>
+            {Array(appointments).fill(0).map((_, i) => {
+              return (
+                <>
+                  <div className='flex items-center justify-between gap-2'>
+                    <div className='flex-1'>
+                      <DatePickerElement custom name={`caseDetails[${i}].appointmentDate`} label={`Appointment Date`} disabled={!currentCase} />
+                    </div>
 
-          <InputElement name="note" label="Note" isDisabled={!currentCase} />
+                    <div className='flex-1'>
+                      <SelectElement label={`Type`} disabled={!currentCase} name={`caseDetails[${i}].type`} options={AppointmentTypeOptions} placeholder='Please select a type' />
+                    </div>
+                  </div>
+
+                  <TextAreaElement
+                    name={`caseDetails[${i}].note`}
+                    label={`Note`}
+                    isDisabled={!currentCase}
+                    placeholder='Enter a note here'
+                  />
+                </>
+              )
+            })}
+          </div>
 
           <Button disabled={isLoading} type="submit" className="w-full">
             {isLoading ? 'Saving...' : 'Save changes'}
           </Button>
+          <Button type='button' className='w-full flex items-end justify-end' variant="link" onClick={() => setAppointments(appointments + 1)}>Add Appointment</Button>
         </form>
       </Form>
     </div>

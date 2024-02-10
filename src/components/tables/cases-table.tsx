@@ -31,7 +31,7 @@ export default function CasesTable() {
     },
     {
       accessorKey: 'docketNumber',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Docket Numeber" />
+      header: ({ column }) => <DataTableColumnHeader column={column} title="Docket Number" />
     },
     {
       accessorKey: 'createdAt',
@@ -101,6 +101,8 @@ export default function CasesTable() {
   ]
 
   const { loading, data } = useGetCases()
+
+
 
   return <DataTable columns={columns} data={data ?? []} isLoading={loading} filterKey="firstName" />
 }

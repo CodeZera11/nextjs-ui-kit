@@ -28,6 +28,11 @@ export default function Home() {
                 View Clients
               </Button>
             </Link>
+            <Link href={PageRoutes.dashboard.CASES}>
+              <Button className="p-8 text-lg" size="lg">
+                View Cases
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

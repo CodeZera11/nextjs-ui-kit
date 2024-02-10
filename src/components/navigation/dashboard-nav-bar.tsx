@@ -2,7 +2,7 @@
 
 import { PageRoutes } from '@/constants/page-routes'
 import { User } from '@/constants/types'
-import { Building, FileCode, Files, Home, Menu, PersonStandingIcon, Settings, User as UserIcon } from 'lucide-react'
+import { Building, File, FileCode, Files, Home, Menu, PersonStandingIcon, Settings, User as UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import UserButton from './user-button'
 import { UserRoleEnum } from '@/constants/enums'
@@ -13,12 +13,6 @@ const ICON_SIZE = 20
 
 const navigationItems = [
   {
-    title: 'Users',
-    link: PageRoutes.dashboard.admin.USERS,
-    icon: <UserIcon size={ICON_SIZE} />,
-    roles: [UserRoleEnum.SUPER_ADMIN]
-  },
-  {
     title: 'Clients',
     link: PageRoutes.dashboard.admin.CLIENTS,
     icon: <UserIcon size={ICON_SIZE} />,
@@ -27,7 +21,7 @@ const navigationItems = [
   {
     title: 'Cases',
     link: PageRoutes.dashboard.CASES,
-    icon: <UserIcon size={ICON_SIZE} />,
+    icon: <File size={ICON_SIZE} />,
     roles: [UserRoleEnum.CLIENT, UserRoleEnum.SUPER_ADMIN, UserRoleEnum.CASE_MANAGER]
   },
 ]

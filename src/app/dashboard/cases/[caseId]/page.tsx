@@ -16,9 +16,11 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Form } from '@/components/ui/form'
 import TextAreaElement from '@/components/forms/elements/text-area-element'
 import { Button } from '@/components/ui/button'
-import { Send } from 'lucide-react'
-import { UserRoleEnum } from '@/constants/enums'
+import { Check, Send } from 'lucide-react'
+import { AppointmentStatusesEnum, UserRoleEnum } from '@/constants/enums'
 import { Badge } from '@/components/ui/badge'
+import { FacetOption } from '@/components/tables/data-table/data'
+import { CheckCircledIcon, Cross2Icon, CrossCircledIcon, StopwatchIcon } from '@radix-ui/react-icons'
 
 interface Props {
     params: { caseId: number }
@@ -80,6 +82,42 @@ const Page = ({ params: { caseId } }: Props) => {
                 return <Badge>{data?.status}</Badge>
             }
         },
+        {
+            accessorKey: 'type',
+            header: ({ column }) => <DataTableColumnHeader column={column} title="Type" />,
+            cell: ({ row }) => {
+                const data = row.original
+                return <Badge>{data?.type}</Badge>
+            }
+        },
+    ]
+
+    const appointmentStatusFilterOptions: FacetOption[] = [
+        {
+            label: 'Upcoming',
+            value: AppointmentStatusesEnum.UPCOMING,
+            icon: StopwatchIcon
+        },
+        {
+            label: 'Acknowledged',
+            value: AppointmentStatusesEnum.ACKNOWLEDGED,
+            icon: CheckCircledIcon
+        },
+        {
+            label: 'Declined',
+            value: AppointmentStatusesEnum.DECLINED,
+            icon: Cross2Icon
+        },
+        {
+            label: 'Appeared',
+            value: AppointmentStatusesEnum.APPEARED,
+            icon: Check
+        },
+        {
+            label: 'Absent',
+            value: AppointmentStatusesEnum.ABSENT,
+            icon: Cross2Icon
+        },
     ]
 
     if (isFetching) {
@@ -109,7 +147,7 @@ const Page = ({ params: { caseId } }: Props) => {
                             </Card>
                             <div className='space-y-2'>
                                 <h2 className='text-xl font-semibold'>Appointments</h2>
-                                <DataTable columns={columns} data={data?.appointments ?? []} isLoading={isFetching} filterKey="firstName" showPagination={false} />
+                                <DataTable columns={columns} data={data?.appointments ?? []} isLoading={isFetching} filterKey="type" showPagination={false} facetOptions={appointmentStatusFilterOptions} facetKey='status' />
                             </div>
                         </div>
                     </div>

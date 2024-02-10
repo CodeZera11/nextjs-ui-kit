@@ -39,13 +39,6 @@ export default function ClientsTable() {
       header: ({ column }) => <DataTableColumnHeader column={column} title="Phone Number" />
     },
     {
-      accessorKey: 'role',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
-      cell: ({ row }) => {
-        return <Badge>{row.original.role}</Badge>
-      }
-    },
-    {
       accessorKey: 'dateOfBirth',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Date of Birth" />,
       cell: ({ row }) => {
@@ -117,7 +110,7 @@ export default function ClientsTable() {
                     Assign Case Manager
                   </Button>
                 }
-              content={<AssignCaseManagerForm data={data} />}
+                content={<AssignCaseManagerForm data={data} />}
               />
             )}
           </>
@@ -138,6 +131,7 @@ export default function ClientsTable() {
                     Add Appointment
                   </Button>
                 }
+                className='sm:max-w-[600px]'
                 content={<AddCaseAppointmentForm data={data} />}
               />
             )}
