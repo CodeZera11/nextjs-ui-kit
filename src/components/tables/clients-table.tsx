@@ -39,13 +39,6 @@ export default function ClientsTable() {
       header: ({ column }) => <DataTableColumnHeader column={column} title="Phone Number" />
     },
     {
-      accessorKey: 'role',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Role" />,
-      cell: ({ row }) => {
-        return <Badge>{row.original.role}</Badge>
-      }
-    },
-    {
       accessorKey: 'dateOfBirth',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Date of Birth" />,
       cell: ({ row }) => {

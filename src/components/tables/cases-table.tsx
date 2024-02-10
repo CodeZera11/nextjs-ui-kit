@@ -102,5 +102,7 @@ export default function CasesTable() {
 
   const { loading, data } = useGetCases()
 
+  
+
   return <DataTable columns={columns} data={data ?? []} isLoading={loading} filterKey="firstName" />
 }
