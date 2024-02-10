@@ -20,13 +20,17 @@ const formSchema = z.object({
   caseId: z.string({
     required_error: 'Please select a case!'
   }),
-  appointmentDate: z.date({
-    required_error: 'Please select a appointment date!'
-  }),
-  note: z.string({
-    required_error: 'Please enter a type!'
-  }).optional(),
-  type: z.nativeEnum(AppointmentTypeEnum, { required_error: "Please select a type!" })
+  caseDetails: z.array(
+    z.object({
+      note: z.string({
+        required_error: 'Please enter a type!'
+      }).optional(),
+      appointmentDate: z.date({
+        required_error: 'Please select a appointment date!'
+      }),
+      type: z.nativeEnum(AppointmentTypeEnum, { required_error: "Please select a type!" })
+    })
+  )
 })
 
 type TCaseAppointment = z.infer<typeof formSchema>
@@ -36,7 +40,6 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
   const [caseOptions, setCaseOptions] = useState<TOption[]>();
   const [appointments, setAppointments] = useState(1);
 
-  console.log({ appointments })
 
   const { mutate: addCaseAppointment, isPending: isLoading } = useAddCaseAppointmentMutation()
 
@@ -60,9 +63,9 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
     addCaseAppointment({
       id: data?.id,
       caseId: Number(values.caseId),
-      date: values.appointmentDate,
-      note: values.note
+      caseDetails: values.caseDetails
     })
+    console.log({ values })
   }
 
   const currentCase = form.watch('caseId')
@@ -74,24 +77,23 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
           <div className='mb-5'>
             <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
           </div>
-          <div className='space-y-2'>
-            {Array(appointments).fill().map((_, i) => {
-              console.log({ i })
+          <div className='space-y-2 max-h-[20rem] overflow-y-scroll'>
+            {Array(appointments).fill(0).map((_, i) => {
               return (
                 <>
                   <div className='flex items-center justify-between gap-2'>
                     <div className='flex-1'>
-                      <DatePickerElement custom name='appointmentDate' label={`Appointment Date (${i})`} disabled={!currentCase} />
+                      <DatePickerElement custom name={`caseDetails[${i}].appointmentDate`} label={`Appointment Date`} disabled={!currentCase} />
                     </div>
 
                     <div className='flex-1'>
-                      <SelectElement label={`Type (${i})`} disabled={!currentCase} name='type' options={AppointmentTypeOptions} placeholder='Please select a type' />
+                      <SelectElement label={`Type`} disabled={!currentCase} name={`caseDetails[${i}].type`} options={AppointmentTypeOptions} placeholder='Please select a type' />
                     </div>
                   </div>
 
                   <TextAreaElement
-                    name="note"
-                    label={`Note (${i})`}
+                    name={`caseDetails[${i}].note`}
+                    label={`Note`}
                     isDisabled={!currentCase}
                     placeholder='Enter a note here'
                   />

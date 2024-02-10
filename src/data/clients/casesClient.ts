@@ -3,6 +3,7 @@ import { crudFactory } from '@/lib/crud-factory'
 
 import { ApiEndpoints } from '@/constants/api'
 import HttpClient from '@/lib/http-client'
+import { AppointmentTypeEnum } from '@/constants/enums'
 
 export interface CreateCaseInput {
   id: number
@@ -17,7 +18,11 @@ export const casesClient = {
   assignCaseManager: (data: { id: number; caseId: number; caseManagerId: number }) => {
     return HttpClient.post<any>(`${ApiEndpoints.CASES}/assign-case-manager`, data)
   },
-  addCaseAppointment: (data: { id: number; caseId: number; date: Date; note?: string }) => {
+  addCaseAppointment: (data: {
+    id: number
+    caseId: number
+    caseDetails: { appointmentDate: Date; type: AppointmentTypeEnum; note?: string }[]
+  }) => {
     return HttpClient.post<any>(`${ApiEndpoints.CASES}/add-case-appointment`, data)
   }
 }
