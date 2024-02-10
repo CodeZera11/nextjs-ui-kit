@@ -1,10 +1,11 @@
 import { Case, Client } from "@/constants/types"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog"
 import { Button } from "../ui/button"
-import { Card, CardHeader, CardTitle } from "../ui/card"
 import { ColumnDef } from "@tanstack/react-table"
 import { DataTableColumnHeader } from "../tables/data-table/data-table-column-header"
 import { DataTable } from "../tables/data-table"
+import Link from "next/link"
+import { PageRoutes } from "@/constants/page-routes"
 
 interface Props {
     data: Client
@@ -50,6 +51,16 @@ const TableDetailsDialog = ({ data, loading }: Props) => {
                 return new Date(createdAt).toLocaleDateString()
             }
         },
+        {
+            id: 'viewCase',
+            cell: ({ row }) => {
+                return (
+                    <Link href={`${PageRoutes.dashboard.CASES}/${row.original.id}`}>
+                        <Button variant="secondary" size="sm">View Case</Button>
+                    </Link>
+                )
+            }
+        }
     ]
 
     return (
@@ -59,7 +70,7 @@ const TableDetailsDialog = ({ data, loading }: Props) => {
             </DialogTrigger>
             <DialogContent className="sm:max-w-screen-2xl">
                 <DialogHeader>
-                    <DialogTitle>Case Details</DialogTitle>
+                    <DialogTitle>List of Cases</DialogTitle>
                 </DialogHeader>
                 <DataTable columns={columns} data={data?.clientCases ?? []} isLoading={loading} filterKey="firstName" />
             </DialogContent>
