@@ -10,6 +10,7 @@ import DatePickerElement from '../elements/date-picker-element'
 import { useAddCaseAppointmentMutation } from '@/data/hooks/useCasesClient'
 import { AppointmentTypeOptions } from '@/constants/appointment'
 import TextAreaElement from '../elements/text-area-element'
+import { AppointmentTypeEnum } from '@/constants/enums'
 
 interface Props {
   data: Client
@@ -25,6 +26,7 @@ const formSchema = z.object({
   note: z.string({
     required_error: 'Please enter a type!'
   }).optional(),
+  type: z.nativeEnum(AppointmentTypeEnum, { required_error: "Please select a type!" })
 })
 
 type TCaseAppointment = z.infer<typeof formSchema>
@@ -32,7 +34,9 @@ type TCaseAppointment = z.infer<typeof formSchema>
 const AddCaseAppointmentForm = ({ data }: Props) => {
 
   const [caseOptions, setCaseOptions] = useState<TOption[]>();
-  const [appointments, setAppointments] = useState<number>(1);
+  const [appointments, setAppointments] = useState(1);
+
+  console.log({ appointments })
 
   const { mutate: addCaseAppointment, isPending: isLoading } = useAddCaseAppointmentMutation()
 
@@ -70,27 +74,36 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
           <div className='mb-5'>
             <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
           </div>
-          <div className='flex items-center justify-between gap-2'>
-            <div className='flex-1'>
-              <DatePickerElement custom name='appointmentDate' label='Appointment Date' disabled={!currentCase} />
-            </div>
+          <div className='space-y-2'>
+            {Array(appointments).fill().map((_, i) => {
+              console.log({ i })
+              return (
+                <>
+                  <div className='flex items-center justify-between gap-2'>
+                    <div className='flex-1'>
+                      <DatePickerElement custom name='appointmentDate' label={`Appointment Date (${i})`} disabled={!currentCase} />
+                    </div>
 
-            <div className='flex-1'>
-              <SelectElement label='Type' name='type' options={AppointmentTypeOptions} placeholder='Please select a type' />
-            </div>
+                    <div className='flex-1'>
+                      <SelectElement label={`Type (${i})`} disabled={!currentCase} name='type' options={AppointmentTypeOptions} placeholder='Please select a type' />
+                    </div>
+                  </div>
+
+                  <TextAreaElement
+                    name="note"
+                    label={`Note (${i})`}
+                    isDisabled={!currentCase}
+                    placeholder='Enter a note here'
+                  />
+                </>
+              )
+            })}
           </div>
-
-          <TextAreaElement
-            name="note"
-            label={'Note'}
-            isDisabled={!currentCase}
-            placeholder='Enter a note here'
-          />
 
           <Button disabled={isLoading} type="submit" className="w-full">
             {isLoading ? 'Saving...' : 'Save changes'}
           </Button>
-          <Button className='w-fullflex items-end' variant="link" onClick={() => setAppointments(appointments + 1)}>Add Appointment</Button>
+          <Button type='button' className='w-full flex items-end justify-end' variant="link" onClick={() => setAppointments(appointments + 1)}>Add Appointment</Button>
         </form>
       </Form>
     </div>
