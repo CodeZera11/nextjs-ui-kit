@@ -41,7 +41,7 @@ const Page = () => {
     <main className="auth_section">
       <Card className="auth_card">
         <CardHeader>
-          <h1 className="auth_head">Forgot Password</h1>
+          <h1 className="auth_head">Reset Password</h1>
           <p className="text-center text-sm text-gray-400">
             Enter the email address associated with your account. We&apos;ll send a link to your email to reset your
             password!
@@ -51,7 +51,7 @@ const Page = () => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 px-4">
               <div className="space-y-2">
-                <CustomInputElement name="email" label="Email" type="email" />
+                <CustomInputElement name="email" label="Email" type="email"  />
               </div>
               <Button disabled={isLoading} className="w-full" type="submit">
                 {isLoading ? 'Sending...' : 'Send Email'}
