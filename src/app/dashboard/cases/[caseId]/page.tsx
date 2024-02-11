@@ -78,7 +78,13 @@ const Page = ({ params: { caseId } }: Props) => {
         },
         {
             accessorKey: 'date',
-            header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />
+            header: ({ column }) => <DataTableColumnHeader column={column} title="Date" />,
+            cell: ({ row }) => {
+                const data = row.original;
+                return (
+                    <span>{new Date(data?.date).toLocaleDateString()}</span>
+                )
+            }
         },
         {
             accessorKey: 'note',
@@ -90,6 +96,9 @@ const Page = ({ params: { caseId } }: Props) => {
             cell: ({ row }) => {
                 const data = row.original
                 return <Badge>{data?.status}</Badge>
+            },
+            filterFn: (row, id, value) => {
+                return value.includes(row.getValue(id))
             }
         },
         {
@@ -98,6 +107,22 @@ const Page = ({ params: { caseId } }: Props) => {
             cell: ({ row }) => {
                 const data = row.original
                 return <Badge>{data?.type}</Badge>
+            }
+        },
+        {
+            accessorKey: 'createdAt',
+            header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
+            cell: ({ row }) => {
+                const createdAt = row.original.createdAt
+                return new Date(createdAt).toLocaleDateString()
+            }
+        },
+        {
+            accessorKey: 'updatedAt',
+            header: ({ column }) => <DataTableColumnHeader column={column} title="Updated At" />,
+            cell: ({ row }) => {
+                const createdAt = row.original.createdAt
+                return new Date(createdAt).toLocaleDateString()
             }
         },
     ]
