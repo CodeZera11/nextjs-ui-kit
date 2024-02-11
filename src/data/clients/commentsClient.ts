@@ -1,8 +1,9 @@
-import { QueryOptions } from '@/constants/types'
+import { QueryOptions, User } from '@/constants/types'
 import { crudFactory } from '@/lib/crud-factory'
 
 import { ApiEndpoints } from '@/constants/api'
 import HttpClient from '@/lib/http-client'
+import { UserRoleEnum } from '@/constants/enums'
 
 export interface CreateCommentInput {
   caseId: number
@@ -11,6 +12,8 @@ export interface CreateCommentInput {
 
 export interface Comment extends CreateCommentInput {
   userId: number
+  role: UserRoleEnum
+  user: User
 }
 
 export const commentsClient = {

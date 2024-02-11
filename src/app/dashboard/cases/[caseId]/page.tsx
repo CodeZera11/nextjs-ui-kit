@@ -37,10 +37,6 @@ const Page = ({ params: { caseId } }: Props) => {
     const { data, isFetching } = useGetOneCase(caseId);
     const { data: comments } = useGetCommentsByCase(Number(caseId))
 
-    const userData = localStorage.getItem(LocalStorageKeys.USER);
-
-    const userDetails: User = userData && JSON.parse(userData);
-
     const onMessageSent = () => {
         form.setValue('message', '')
     }
@@ -128,6 +124,8 @@ const Page = ({ params: { caseId } }: Props) => {
         )
     }
 
+    console.log({ comments })
+
     return (
         <div className="w-full py-5">
             <h1 className="text-4xl w-full text-center font-semibold">Case Details</h1>
@@ -159,13 +157,13 @@ const Page = ({ params: { caseId } }: Props) => {
                             comments?.map((comment, i) => {
                                 return (
                                     <div className="flex flex-col gap-4" key={i}>
-                                        {comment.userId === userDetails.id ? (
+                                        {(comment.role === UserRoleEnum.CLIENT) ? (
                                             <div className="flex items-end mt-2">
                                                 <div className="h-10 w-10 flex-none">
                                                     <Avatar className="h-full w-full">
                                                         <AvatarImage alt="User" src="/placeholder-avatar.jpg" />
                                                         <AvatarFallback>
-                                                            {userDetails.firstName?.charAt(0) + userDetails.lastName.charAt(0)}
+                                                            {comment.user.firstName.charAt(0) + comment.user.lastName.charAt(0)}
                                                         </AvatarFallback>
                                                     </Avatar>
                                                 </div>
@@ -185,7 +183,7 @@ const Page = ({ params: { caseId } }: Props) => {
                                                 <div className="h-10 w-10 flex-none">
                                                     <Avatar className="h-full w-full">
                                                         <AvatarImage alt="Admin" src="/placeholder-avatar.jpg" />
-                                                        <AvatarFallback>A</AvatarFallback>
+                                                        <AvatarFallback>{comment.user.firstName.charAt(0) + comment.user.lastName.charAt(0)}</AvatarFallback>
                                                     </Avatar>
                                                 </div>
                                             </div>
