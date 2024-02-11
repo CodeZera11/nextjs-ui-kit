@@ -22,6 +22,8 @@ import { Badge } from '@/components/ui/badge'
 import { FacetOption } from '@/components/tables/data-table/data'
 import { CheckCircledIcon, Cross2Icon, CrossCircledIcon, StopwatchIcon } from '@radix-ui/react-icons'
 import { useEffect, useRef } from 'react'
+import ConfirmActionDialog from '@/components/dialogs/confirm-action-dialog'
+import AddCaseAppointmentForm from '@/components/forms/client/add-case-appointment'
 
 interface Props {
     params: { caseId: number }
@@ -38,6 +40,9 @@ const Page = ({ params: { caseId } }: Props) => {
     const { data, isFetching } = useGetOneCase(caseId);
     const { data: comments } = useGetCommentsByCase(Number(caseId));
     const commentsContainerRef = useRef<any>(null);
+    const userData = localStorage.getItem(LocalStorageKeys.USER);
+
+    const userDetails: User = userData && JSON.parse(userData);
 
     const onMessageSent = () => {
         form.setValue('message', '')
@@ -180,16 +185,18 @@ const Page = ({ params: { caseId } }: Props) => {
                                     <p className="flex items-center justify-between">Charge Description: {data?.chargeDescription}</p>
                                 </CardContent>
                             </Card>
-                            <div className='space-y-2'>
-                                <h2 className='text-xl font-semibold'>Appointments</h2>
+                            <div className='space-y-4'>
+                                <div className='flex items-center justify-between bg-red-400'>
+                                    <h2 className='text-xl font-semibold'>Appointments</h2>
+                                </div>
                                 <DataTable columns={columns} data={data?.appointments ?? []} isLoading={isFetching} filterKey="type" showPagination={false} facetOptions={appointmentStatusFilterOptions} facetKey='status' />
                             </div>
                         </div>
                     </div>
                 </div>
-                <Card className="flex flex-col gap-2 shadow-md rounded-xl p-5 min-w-[30rem]">
-                    <CardHeader className="text-xl font-bold uppercase text-start">Chat with the case manager</CardHeader>
-                    <div className='h-[22rem] overflow-y-scroll' ref={commentsContainerRef}>
+                <Card className="flex flex-col gap-2 shadow-md rounded-xl min-w-[30rem]">
+                    <CardHeader className="text-xl rounded-t-xl font-bold uppercase text-start bg-light_black text-white">Chat with the {userDetails.role === UserRoleEnum.CLIENT ? "Case Manager" : "Client"}</CardHeader>
+                    <div className='h-[22rem] overflow-y-scroll p-5' ref={commentsContainerRef}>
                         {comments &&
                             comments?.map((comment, i) => {
                                 return (
@@ -230,7 +237,7 @@ const Page = ({ params: { caseId } }: Props) => {
                             })}
                     </div>
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 p-5">
                             <div className="flex mt-2 w-full flex-col items-center gap-2">
                                 <TextAreaElement name="message" placeholder="Type here..." className="h-[100px] w-[450px]" />
                                 <Button disabled={isLoading || !message} type="submit" className="h-full w-full">

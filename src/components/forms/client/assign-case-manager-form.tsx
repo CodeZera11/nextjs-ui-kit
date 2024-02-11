@@ -28,8 +28,6 @@ const AssignCaseManagerForm = ({ data }: Props) => {
 
     const { data: caseManagersData } = useGetCaseManagers();
 
-    console.log({ caseManagersData })
-
     const [caseManagersOptions, setCaseManagersOptions] = useState<TOption[]>();
     const [caseOptions, setCaseOptions] = useState<TOption[]>();
 

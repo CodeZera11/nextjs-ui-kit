@@ -7,11 +7,10 @@ interface Props {
   name: string
   label: string
   description?: string
-  placeholder?: string
   type?: string
 }
 
-const PhoneNumberInputElement = ({ name, label, description, placeholder }: Props) => {
+const PhoneNumberInputElement = ({ name, label, description }: Props) => {
   const { control } = useFormContext()
 
   return (
@@ -23,7 +22,7 @@ const PhoneNumberInputElement = ({ name, label, description, placeholder }: Prop
           <FormLabel>{label}</FormLabel>
           <FormControl>
             <PhoneInput
-              defaultCountry="ae"
+              defaultCountry="us"
               value={field.value}
               onChange={field.onChange}
               inputStyle={{
