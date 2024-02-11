@@ -21,6 +21,7 @@ import { AppointmentStatusesEnum, UserRoleEnum } from '@/constants/enums'
 import { Badge } from '@/components/ui/badge'
 import { FacetOption } from '@/components/tables/data-table/data'
 import { CheckCircledIcon, Cross2Icon, CrossCircledIcon, StopwatchIcon } from '@radix-ui/react-icons'
+import { useEffect, useRef } from 'react'
 
 interface Props {
     params: { caseId: number }
@@ -35,13 +36,26 @@ const formSchema = z.object({
 const Page = ({ params: { caseId } }: Props) => {
 
     const { data, isFetching } = useGetOneCase(caseId);
-    const { data: comments } = useGetCommentsByCase(Number(caseId))
+    const { data: comments } = useGetCommentsByCase(Number(caseId));
+    const commentsContainerRef = useRef<any>(null);
 
     const onMessageSent = () => {
         form.setValue('message', '')
     }
 
     const { mutate: sendComment, isPending: isLoading } = useCreateCommentMutation(onMessageSent)
+
+    useEffect(() => {
+        if (commentsContainerRef.current) {
+            const parentDiv = commentsContainerRef.current;
+            const lastChildDiv = parentDiv.lastElementChild;
+
+            if (lastChildDiv) {
+                const scrollTopValue = lastChildDiv.offsetTop - parentDiv.offsetTop;
+                parentDiv.scrollTop = scrollTopValue;
+            }
+        }
+    }, [comments])
 
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -124,8 +138,6 @@ const Page = ({ params: { caseId } }: Props) => {
         )
     }
 
-    console.log({ comments })
-
     return (
         <div className="w-full py-5">
             <h1 className="text-4xl w-full text-center font-semibold">Case Details</h1>
@@ -152,7 +164,7 @@ const Page = ({ params: { caseId } }: Props) => {
                 </div>
                 <Card className="flex flex-col gap-2 shadow-md rounded-xl p-5 min-w-[30rem]">
                     <CardHeader className="text-xl font-bold uppercase text-start">Chat with the case manager</CardHeader>
-                    <div className='h-[22rem] overflow-y-scroll'>
+                    <div className='h-[22rem] overflow-y-scroll' ref={commentsContainerRef}>
                         {comments &&
                             comments?.map((comment, i) => {
                                 return (
