@@ -1,7 +1,7 @@
 import * as z from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Client, TOption } from '@/constants/types'
+import { Case, Client, TOption } from '@/constants/types'
 import { Form } from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { useEffect, useState } from 'react'
@@ -14,7 +14,8 @@ import { AppointmentTypeEnum } from '@/constants/enums'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 interface Props {
-  data: Client
+  clientCases: Case[]
+  clientId: number
 }
 
 const formSchema = z.object({
@@ -36,7 +37,7 @@ const formSchema = z.object({
 
 type TCaseAppointment = z.infer<typeof formSchema>
 
-const AddCaseAppointmentForm = ({ data }: Props) => {
+const AddCaseAppointmentForm = ({ clientId, clientCases }: Props) => {
 
   const [caseOptions, setCaseOptions] = useState<TOption[]>();
   const [appointments, setAppointments] = useState(1);
@@ -45,8 +46,8 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
   const { mutate: addCaseAppointment, isPending: isLoading } = useAddCaseAppointmentMutation()
 
   useEffect(() => {
-    if (data?.clientCases && data?.clientCases?.length > 0) {
-      const caseOptions = data?.clientCases?.map((clientCase) => {
+    if (clientCases && clientCases?.length > 0) {
+      const caseOptions = clientCases?.map((clientCase) => {
         return {
           label: `${clientCase.docketNumber} - ${clientCase.type}`,
           value: clientCase.id.toString()
@@ -54,24 +55,24 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
       })
       setCaseOptions(caseOptions)
     }
-  }, [data?.clientCases])
+  }, [clientCases])
 
   const form = useForm<TCaseAppointment>({
     resolver: zodResolver(formSchema)
   })
 
   useEffect(() => {
-    if (data?.clientCases?.length === 1) {
+    if (clientCases?.length === 1) {
       setSingleCase(true);
-      form.setValue("caseId", data?.clientCases[0].id.toString());
+      form.setValue("caseId", clientCases[0].id.toString());
     } else {
       setSingleCase(false);
     }
-  }, [data, form])
+  }, [form, clientCases])
 
   function onSubmit(values: TCaseAppointment) {
     addCaseAppointment({
-      id: data?.id,
+      id: clientId,
       caseId: Number(values.caseId),
       caseDetails: values.caseDetails
     })

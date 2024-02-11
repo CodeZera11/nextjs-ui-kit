@@ -24,6 +24,7 @@ import { CheckCircledIcon, Cross2Icon, StopwatchIcon } from '@radix-ui/react-ico
 import { useEffect, useRef } from 'react'
 import ConfirmActionDialog from '@/components/dialogs/confirm-action-dialog'
 import ConfirmAction from '@/components/confirm-action'
+import AddCaseAppointmentForm from '@/components/forms/client/add-case-appointment'
 
 interface Props {
     params: { caseId: number }
@@ -75,7 +76,6 @@ const Page = ({ params: { caseId } }: Props) => {
     }
 
     const message = form.watch("message");
-
 
     const columns: ColumnDef<Appointment>[] = [
         {
@@ -187,8 +187,20 @@ const Page = ({ params: { caseId } }: Props) => {
                                 </CardContent>
                             </Card>
                             <div className='space-y-4'>
-                                <div className='flex items-center justify-between'>
-                                    <h2 className='text-xl font-semibold'>Appointments</h2>
+                                <div className='flex items-start justify-between'>
+                                    <h2 className='text-2xl font-semibold'>Appointments</h2>
+                                    {data?.clientId && (
+                                        <ConfirmActionDialog
+                                            title="Add Appointment"
+                                            anchor={
+                                                <Button variant="default">
+                                                    Add Appointment
+                                                </Button>
+                                            }
+                                            className='sm:max-w-[600px]'
+                                            content={<AddCaseAppointmentForm clientCases={[data]} clientId={data?.clientId} />}
+                                        />
+                                    )}
                                 </div>
                                 <DataTable showDateFilter={false} columns={columns} data={data?.appointments ?? []} isLoading={isFetching} filterKey="type" showPagination={false} facetOptions={appointmentStatusFilterOptions} facetKey='status' />
                             </div>
