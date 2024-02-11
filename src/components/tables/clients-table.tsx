@@ -12,6 +12,8 @@ import AddClientCaseForm from '../forms/client/add-case-form'
 import AssignCaseManagerForm from '../forms/client/assign-case-manager-form'
 import AddCaseAppointmentForm from '../forms/client/add-case-appointment'
 import TableDetailsDialog from '../dialogs/table-details-dialog'
+import Link from 'next/link'
+import { PageRoutes } from '@/constants/page-routes'
 
 export default function ClientsTable() {
 
@@ -46,26 +48,26 @@ export default function ClientsTable() {
         return new Date(dob).toLocaleDateString()
       }
     },
-    {
-      accessorKey: 'supervisionTier',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Supervision Tier" />
-    },
-    {
-      accessorKey: 'supervisionLevel',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Supervision Level" />
-    },
-    {
-      accessorKey: 'attorneyName',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Attorney Name" />
-    },
-    {
-      accessorKey: 'attorneyEmail',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Attorney Email" />
-    },
-    {
-      accessorKey: 'attorneyPhone',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Attorney Phone" />
-    },
+    // {
+    //   accessorKey: 'supervisionTier',
+    //   header: ({ column }) => <DataTableColumnHeader column={column} title="Supervision Tier" />
+    // },
+    // {
+    //   accessorKey: 'supervisionLevel',
+    //   header: ({ column }) => <DataTableColumnHeader column={column} title="Supervision Level" />
+    // },
+    // {
+    //   accessorKey: 'attorneyName',
+    //   header: ({ column }) => <DataTableColumnHeader column={column} title="Attorney Name" />
+    // },
+    // {
+    //   accessorKey: 'attorneyEmail',
+    //   header: ({ column }) => <DataTableColumnHeader column={column} title="Attorney Email" />
+    // },
+    // {
+    //   accessorKey: 'attorneyPhone',
+    //   header: ({ column }) => <DataTableColumnHeader column={column} title="Attorney Phone" />
+    // },
     {
       accessorKey: 'createdAt',
       header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
@@ -74,14 +76,14 @@ export default function ClientsTable() {
         return new Date(createdAt).toLocaleDateString()
       }
     },
-    {
-      accessorKey: 'updatedAt',
-      header: ({ column }) => <DataTableColumnHeader column={column} title="Updated At" />,
-      cell: ({ row }) => {
-        const createdAt = row.original.createdAt
-        return new Date(createdAt).toLocaleDateString()
-      }
-    },
+    // {
+    //   accessorKey: 'updatedAt',
+    //   header: ({ column }) => <DataTableColumnHeader column={column} title="Updated At" />,
+    //   cell: ({ row }) => {
+    //     const createdAt = row.original.createdAt
+    //     return new Date(createdAt).toLocaleDateString()
+    //   }
+    // },
     {
       id: 'clientCases',
       header: 'Cases',
@@ -89,8 +91,11 @@ export default function ClientsTable() {
         const data = row.original
         return (
           <>
-            {data?.clientCases?.length > 0 && (
-              <TableDetailsDialog data={data} loading={isLoading} />
+            {data?.clientCases?.length === 1 && (
+              <Link href={`${PageRoutes.dashboard.CASES}/${data?.clientCases[0].id}`}>
+                <Button variant="secondary" size="sm">View Case Details</Button>
+              </Link>
+              // <TableDetailsDialog data={data} loading={isLoading} />
             )}
           </>
         )
@@ -106,7 +111,7 @@ export default function ClientsTable() {
               <ConfirmActionDialog
                 title="Assign Case Manager"
                 anchor={
-                  <Button size="sm">
+                  <Button size="sm" variant="secondary">
                     Assign Case Manager
                   </Button>
                 }
@@ -143,8 +148,9 @@ export default function ClientsTable() {
       id: 'actions',
       enableHiding: false,
       cell: ({ row }) => (
-        <div className="flex items-center gap-2">
-          <ConfirmActionDialog
+        <>
+          {/* <div className="flex items-center gap-2"> */}
+          {/* <ConfirmActionDialog
             title="Add Case"
             anchor={
               <Button variant="secondary" size="sm">
@@ -152,9 +158,10 @@ export default function ClientsTable() {
               </Button>
             }
             content={<AddClientCaseForm data={row.original} />}
-          />
+          /> */}
           <ConfirmDeleteDialog onDelete={() => { deleteClient(row.original.id) }} isLoading={isLoading} />
-        </div>
+          {/* </div> */}
+        </>
       )
     }
   ]

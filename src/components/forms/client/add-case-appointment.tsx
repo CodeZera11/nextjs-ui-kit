@@ -39,7 +39,7 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
 
   const [caseOptions, setCaseOptions] = useState<TOption[]>();
   const [appointments, setAppointments] = useState(1);
-
+  const [singleCase, setSingleCase] = useState(true);
 
   const { mutate: addCaseAppointment, isPending: isLoading } = useAddCaseAppointmentMutation()
 
@@ -59,6 +59,15 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
     resolver: zodResolver(formSchema)
   })
 
+  useEffect(() => {
+    if (data?.clientCases?.length === 1) {
+      setSingleCase(true);
+      form.setValue("caseId", data?.clientCases[0].id.toString());
+    } else {
+      setSingleCase(false);
+    }
+  }, [data, form])
+
   function onSubmit(values: TCaseAppointment) {
     addCaseAppointment({
       id: data?.id,
@@ -75,7 +84,9 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-2 p-4">
           <div className='mb-5'>
-            <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
+            {!singleCase && (
+              <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
+            )}
           </div>
           <div className='space-y-2 max-h-[20rem] overflow-y-scroll'>
             {Array(appointments).fill(0).map((_, i) => {

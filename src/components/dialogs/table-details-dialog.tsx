@@ -66,7 +66,7 @@ const TableDetailsDialog = ({ data, loading }: Props) => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant="outline">View Case Details</Button>
+                <Button variant="secondary">View Case Details</Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-screen-2xl">
                 <DialogHeader>
