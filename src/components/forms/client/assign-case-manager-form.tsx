@@ -30,6 +30,7 @@ const AssignCaseManagerForm = ({ data }: Props) => {
 
     const [caseManagersOptions, setCaseManagersOptions] = useState<TOption[]>();
     const [caseOptions, setCaseOptions] = useState<TOption[]>();
+    const [singleCase, setSingleCase] = useState(true);
 
     const { mutate: assignCaseManager, isPending: isLoading } = useAssignCaseManagerMutation()
 
@@ -60,6 +61,15 @@ const AssignCaseManagerForm = ({ data }: Props) => {
         resolver: zodResolver(formSchema),
     })
 
+    useEffect(() => {
+        if (data?.clientCases?.length === 1) {
+            setSingleCase(true);
+            form.setValue("caseId", data?.clientCases[0].id.toString());
+        } else {
+            setSingleCase(false);
+        }
+    }, [data, form])
+
     function onSubmit(values: TCaseManager) {
         assignCaseManager({
             id: data?.id,
@@ -73,7 +83,9 @@ const AssignCaseManagerForm = ({ data }: Props) => {
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-4 p-4">
-                <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
+                {!singleCase && (
+                    <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
+                )}
                 <SelectElement disabled={!currentCase} name="caseManagerId" placeholder="Please select a case manager" label="Case Manager" options={caseManagersOptions || []} />
                 <Button disabled={isLoading} type="submit" className='w-full'>
                     {isLoading ? 'Saving...' : 'Save changes'}
