@@ -137,7 +137,7 @@ export default function ClientsTable() {
                   </Button>
                 }
                 className='sm:max-w-[600px]'
-                content={<AddCaseAppointmentForm data={data} />}
+                content={<AddCaseAppointmentForm clientCases={data?.clientCases} clientId={data?.id} />}
               />
             )}
           </>

@@ -44,6 +44,7 @@ export interface Case {
   type?: string
   charge?: string
   note?: string
+  clientId: number
   chargeDescription?: string
   docketNumber?: string
   caseManagerId?: number

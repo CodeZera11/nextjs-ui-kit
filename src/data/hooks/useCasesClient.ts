@@ -60,10 +60,10 @@ export const useAddCaseAppointmentMutation = () => {
         variant: 'default',
         title: 'Case Appointment Added Successfully'
       })
-      router.push(PageRoutes.dashboard.admin.CLIENTS)
     },
     onSettled: () => {
       queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
+      router.refresh()
     }
   })
 }
