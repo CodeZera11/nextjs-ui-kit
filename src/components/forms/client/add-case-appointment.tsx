@@ -11,6 +11,7 @@ import { useAddCaseAppointmentMutation } from '@/data/hooks/useCasesClient'
 import { AppointmentTypeOptions } from '@/constants/appointment'
 import TextAreaElement from '../elements/text-area-element'
 import { AppointmentTypeEnum } from '@/constants/enums'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 interface Props {
   data: Client
@@ -74,7 +75,6 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
       caseId: Number(values.caseId),
       caseDetails: values.caseDetails
     })
-    console.log({ values })
   }
 
   const currentCase = form.watch('caseId')
@@ -88,27 +88,30 @@ const AddCaseAppointmentForm = ({ data }: Props) => {
               <SelectElement name="caseId" placeholder="Please select a case" label="Case" options={caseOptions || []} />
             )}
           </div>
-          <div className='space-y-2 max-h-[20rem] overflow-y-scroll'>
+          <div className='space-y-4 max-h-[20rem] overflow-y-scroll'>
             {Array(appointments).fill(0).map((_, i) => {
               return (
-                <>
-                  <div className='flex items-center justify-between gap-2'>
-                    <div className='flex-1'>
-                      <DatePickerElement custom name={`caseDetails[${i}].appointmentDate`} label={`Appointment Date`} disabled={!currentCase} />
+                <Card key={i}>
+                  <CardHeader className='text-xl font-semibold text-center bg-light_black rounded-t-xl text-white'>Appointment - {i + 1}</CardHeader>
+                  <CardContent className='pt-5'>
+                    <div className='flex items-center justify-between gap-2'>
+                      <div className='flex-1'>
+                        <DatePickerElement custom name={`caseDetails[${i}].appointmentDate`} label={`Appointment Date`} disabled={!currentCase} />
+                      </div>
+
+                      <div className='flex-1'>
+                        <SelectElement label={`Type`} disabled={!currentCase} name={`caseDetails[${i}].type`} options={AppointmentTypeOptions} placeholder='Please select a type' />
+                      </div>
                     </div>
 
-                    <div className='flex-1'>
-                      <SelectElement label={`Type`} disabled={!currentCase} name={`caseDetails[${i}].type`} options={AppointmentTypeOptions} placeholder='Please select a type' />
-                    </div>
-                  </div>
-
-                  <TextAreaElement
-                    name={`caseDetails[${i}].note`}
-                    label={`Note`}
-                    isDisabled={!currentCase}
-                    placeholder='Enter a note here'
-                  />
-                </>
+                    <TextAreaElement
+                      name={`caseDetails[${i}].note`}
+                      label={`Note`}
+                      isDisabled={!currentCase}
+                      placeholder='Enter a note here'
+                    />
+                  </CardContent>
+                </Card>
               )
             })}
           </div>

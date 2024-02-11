@@ -33,6 +33,7 @@ interface DataTableProps<TData, TValue> {
   facetOptions?: FacetOption[]
   showFilters?: boolean
   showPagination?: boolean
+  showDateFilter?: boolean
 }
 
 export function DataTable<TData, TValue>({
@@ -43,6 +44,7 @@ export function DataTable<TData, TValue>({
   facetKey,
   facetOptions,
   showFilters = true,
+  showDateFilter = true,
   showPagination = true
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({})
@@ -96,6 +98,7 @@ export function DataTable<TData, TValue>({
         filterKey={filterKey ?? 'email'}
         facetKey={facetKey ?? 'status'}
         facetOptions={facetOptions}
+        showDateFilter={showDateFilter}
       />}
       <div className="rounded-md border">
         <Table>

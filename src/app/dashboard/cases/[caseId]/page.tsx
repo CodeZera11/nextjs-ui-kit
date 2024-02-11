@@ -113,23 +113,7 @@ const Page = ({ params: { caseId } }: Props) => {
                 const data = row.original
                 return <Badge>{data?.type}</Badge>
             }
-        },
-        {
-            accessorKey: 'createdAt',
-            header: ({ column }) => <DataTableColumnHeader column={column} title="Created At" />,
-            cell: ({ row }) => {
-                const createdAt = row.original.createdAt
-                return new Date(createdAt).toLocaleDateString()
-            }
-        },
-        {
-            accessorKey: 'updatedAt',
-            header: ({ column }) => <DataTableColumnHeader column={column} title="Updated At" />,
-            cell: ({ row }) => {
-                const createdAt = row.original.createdAt
-                return new Date(createdAt).toLocaleDateString()
-            }
-        },
+        }
     ]
 
     const appointmentStatusFilterOptions: FacetOption[] = [
@@ -189,7 +173,7 @@ const Page = ({ params: { caseId } }: Props) => {
                                 <div className='flex items-center justify-between'>
                                     <h2 className='text-xl font-semibold'>Appointments</h2>
                                 </div>
-                                <DataTable columns={columns} data={data?.appointments ?? []} isLoading={isFetching} filterKey="type" showPagination={false} facetOptions={appointmentStatusFilterOptions} facetKey='status' />
+                                <DataTable showDateFilter={false} columns={columns} data={data?.appointments ?? []} isLoading={isFetching} filterKey="type" showPagination={false} facetOptions={appointmentStatusFilterOptions} facetKey='status' />
                             </div>
                         </div>
                     </div>

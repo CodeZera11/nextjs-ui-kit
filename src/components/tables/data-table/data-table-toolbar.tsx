@@ -20,6 +20,7 @@ interface DataTableToolbarProps<TData> {
   facetOptions?: FacetOption[]
   date: DateRange | undefined
   setDate: Dispatch<SetStateAction<DateRange | undefined>>
+  showDateFilter?: boolean
 }
 
 export function DataTableToolbar<TData>({
@@ -28,7 +29,8 @@ export function DataTableToolbar<TData>({
   facetKey,
   facetOptions,
   date,
-  setDate
+  setDate,
+  showDateFilter = true
 }: DataTableToolbarProps<TData>) {
   const isFiltered = table.getState().columnFilters.length > 0
 
@@ -41,7 +43,7 @@ export function DataTableToolbar<TData>({
           onChange={(event) => table.getColumn(filterKey)?.setFilterValue(event.target.value)}
           className="h-8 w-[150px] lg:w-[250px]"
         />
-        <DateRangePickerElement date={date} setDate={setDate} />
+        {showDateFilter && <DateRangePickerElement date={date} setDate={setDate} />}
 
         {facetKey && table.getColumn(facetKey) && (
           <DataTableFacetedFilter column={table.getColumn(facetKey)} title="Status" options={facetOptions ?? []} />

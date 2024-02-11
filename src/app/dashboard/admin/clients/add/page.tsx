@@ -123,7 +123,7 @@ const Page = () => {
   }
 
   return (
-    <section className="">
+    <section className="w-[70vw] mx-auto">
       <Card className="shadow-none border-none">
         <CardHeader>
           <h1 className="auth_head">Create a new Client</h1>
