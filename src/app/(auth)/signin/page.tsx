@@ -50,7 +50,7 @@ const Page = () => {
       <Card className="auth_card">
         <CardHeader>
           <h1 className="auth_head">Sign In</h1>
-          <p className="auth_subhead">Welcome Back!</p>
+          <p className="auth_subhead">Welcome</p>
         </CardHeader>
         <CardContent className="">
           <Form {...form}>
@@ -64,12 +64,6 @@ const Page = () => {
               <Button disabled={isLoading} className="w-full" type="submit">
                 {isLoading ? 'Loading...' : 'Sign In'}
               </Button>
-              <p className="mt-4 text-center">
-                Don&apos;t have an account?{' '}
-                <Link className="text-primary underline" href={PageRoutes.SIGNUP}>
-                  Create Account
-                </Link>
-              </p>
               <p className="text-center">
                 Forgot Password?{' '}
                 <Link

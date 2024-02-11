@@ -106,9 +106,9 @@ const Page = () => {
               <div className='grid grid-cols-2 gap-x-10 gap-y-5'>
                 <InputElement name="firstName" placeholder="John" label="First Name" />
                 <InputElement name="lastName" placeholder="Wick" label="Last Name" />
-                <DatePickerElement name='dateOfBirth' label='Date Of Birth' />
                 <CustomInputElement name="email" label="Email" type="email" />
                 <PhoneNumberInputElement name='phoneNumber' label='Phone Number' />
+                <DatePickerElement name='dateOfBirth' label='Date Of Birth' />
                 <InputElement name="supervisionTier" label="Supervision Tier" />
                 <InputElement name="supervisionLevel" label="Supervision Level" />
                 <InputElement name="attorneyName" label="Attorney Name" />

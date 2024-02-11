@@ -2,7 +2,7 @@
 
 import { PageRoutes } from '@/constants/page-routes'
 import { User } from '@/constants/types'
-import { Building, File, FileCode, Files, Home, Menu, PersonStandingIcon, Settings, User as UserIcon } from 'lucide-react'
+import { File, Menu, User as UserIcon } from 'lucide-react'
 import Link from 'next/link'
 import UserButton from './user-button'
 import { UserRoleEnum } from '@/constants/enums'
@@ -47,7 +47,7 @@ const NavigationLink = ({ link, title, icon }: NavigationLinkProps) => {
 
 export default function NavBar({ user }: { user: User }) {
   return (
-    <div className="flex w-full items-center justify-between gap-2 bg-[#252A2C] text-[#C4C6C8] px-5 py-4 dark:bg-gray-800/40 xl:px-16">
+    <div className="flex w-full items-center justify-between gap-2 bg-light_black text-[#C4C6C8] px-7 py-4 dark:bg-gray-800/40">
       <div className="flex w-full items-center justify-between gap-2 font-semibold ">
         <Link href='/' className="flex items-center gap-2 font-semibold">
           <span>Fortune</span>
