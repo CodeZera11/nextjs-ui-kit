@@ -16,14 +16,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Form } from '@/components/ui/form'
 import TextAreaElement from '@/components/forms/elements/text-area-element'
 import { Button } from '@/components/ui/button'
-import { Check, Send } from 'lucide-react'
+import { Check, Send, SendHorizonal } from 'lucide-react'
 import { AppointmentStatusesEnum, UserRoleEnum } from '@/constants/enums'
 import { Badge } from '@/components/ui/badge'
 import { FacetOption } from '@/components/tables/data-table/data'
-import { CheckCircledIcon, Cross2Icon, CrossCircledIcon, StopwatchIcon } from '@radix-ui/react-icons'
+import { CheckCircledIcon, Cross2Icon, StopwatchIcon } from '@radix-ui/react-icons'
 import { useEffect, useRef } from 'react'
 import ConfirmActionDialog from '@/components/dialogs/confirm-action-dialog'
-import AddCaseAppointmentForm from '@/components/forms/client/add-case-appointment'
+import ConfirmAction from '@/components/confirm-action'
 
 interface Props {
     params: { caseId: number }
@@ -76,6 +76,7 @@ const Page = ({ params: { caseId } }: Props) => {
 
     const message = form.watch("message");
 
+
     const columns: ColumnDef<Appointment>[] = [
         {
             accessorKey: 'id',
@@ -113,6 +114,22 @@ const Page = ({ params: { caseId } }: Props) => {
                 const data = row.original
                 return <Badge>{data?.type}</Badge>
             }
+        },
+        {
+            id: 'actions',
+            enableHiding: false,
+            cell: ({ row }) => (
+                <>
+                    <ConfirmActionDialog
+                        anchor={
+                            <Button variant="secondary" size="sm">
+                                Notify
+                            </Button>
+                        }
+                        content={<ConfirmAction btnText="Send" data={row.original} clientDetails={data?.client} docketNumber={data?.docketNumber} />}
+                    />
+                </>
+            )
         }
     ]
 

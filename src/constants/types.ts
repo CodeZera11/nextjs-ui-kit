@@ -51,6 +51,7 @@ export interface Case {
   createdAt: string
   updatedAt: string
   comments: { message: string; userId: number }[]
+  client: { email: string; id: number }
 }
 
 export interface Appointment {

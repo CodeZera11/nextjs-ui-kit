@@ -6,7 +6,7 @@ export function useCreateCommentMutation(onMessageSentCallback: () => void) {
   const queryClient = useQueryClient()
   return useMutation({
     mutationFn: commentsClient.create,
-    onSuccess: (response: any) => {
+    onSuccess: () => {
       queryClient.refetchQueries({ queryKey: [`${ApiEndpoints.COMMENTS_BY_CASE}`] })
       onMessageSentCallback()
     }
