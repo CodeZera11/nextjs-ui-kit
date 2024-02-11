@@ -3,8 +3,17 @@
 import { Button } from '@/components/ui/button'
 import { PageRoutes } from '@/constants/page-routes'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 
 export default function Home() {
+
+  const router = useRouter()
+  useEffect(() => {
+    router.push(PageRoutes.SIGNIN)
+  }, [])
+
+  return null
 
   return (
     <section className="overflow-x-hidden">
