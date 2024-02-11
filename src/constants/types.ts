@@ -59,6 +59,8 @@ export interface Appointment {
   note?: string
   status: AppointmentTypeEnum
   type: AppointmentTypeEnum
+  createdAt: string
+  updatedAt: string
 }
 
 export type TOption = {
