@@ -10,7 +10,7 @@ export const ApiEndpoints = {
   COMMENTS_BY_CASE: API_ROOT + '/comments/all-by-case',
   SEND_EMAIL: API_ROOT + '/common/send-email',
   FORGOT_PASSWORD: API_ROOT + '/auth/forgot-password',
-  RESET_PASSWORD: API_ROOT + '/auth/reset-password'
+  RESET_PASSWORD: API_ROOT + '/auth/reset-password',
 }
 
 export const MAX_NUMBER = 999999999

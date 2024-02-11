@@ -2,7 +2,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { cn } from '@/lib/utils'
 
 interface Props {
-  title: string
+  title?: string
   content: React.ReactNode
   anchor: React.ReactNode
   className?: string
@@ -14,7 +14,7 @@ const ConfirmActionDialog = ({ title, anchor, content, className }: Props) => {
       <DialogTrigger asChild>{anchor}</DialogTrigger>
       <DialogContent className={cn("sm:max-w-[425px]", className)}>
         <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
+          {title && <DialogTitle>{title}</DialogTitle>}
         </DialogHeader>
         {content}
       </DialogContent>
