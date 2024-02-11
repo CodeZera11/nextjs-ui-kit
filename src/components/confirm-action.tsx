@@ -1,6 +1,6 @@
 "use client"
 
-import { Appointment, Client } from "@/constants/types"
+import { Appointment } from "@/constants/types"
 import { Button } from "./ui/button"
 import { useSendEmailMutation } from "@/data/hooks/useCommonClient"
 
@@ -15,8 +15,6 @@ interface Props {
 const ConfirmAction = ({ variant, btnText = "Confirm", data, clientDetails, docketNumber }: Props) => {
 
     const { mutate: sendEmail, isPending: isLoading } = useSendEmailMutation();
-
-    console.log({ data })
 
     function emailSender() {
         clientDetails?.email && (
