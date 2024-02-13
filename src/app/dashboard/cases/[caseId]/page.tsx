@@ -120,7 +120,7 @@ const Page = ({ params: { caseId } }: Props) => {
             id: 'actions',
             enableHiding: false,
             cell: ({ row }) => (
-                <>
+                <div className='space-x-2'>
                     <ConfirmActionDialog
                         title="Update Status"
                         anchor={
@@ -138,7 +138,7 @@ const Page = ({ params: { caseId } }: Props) => {
                         }
                         content={<ConfirmAction btnText="Send" data={row.original} clientDetails={data?.client} docketNumber={data?.docketNumber} />}
                     />}
-                </>
+                </div>
             )
         }
     ]
