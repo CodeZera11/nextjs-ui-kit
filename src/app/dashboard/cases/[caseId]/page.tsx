@@ -16,7 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Form } from '@/components/ui/form'
 import TextAreaElement from '@/components/forms/elements/text-area-element'
 import { Button } from '@/components/ui/button'
-import { Check, Send, SendHorizonal } from 'lucide-react'
+import { Check, Send } from 'lucide-react'
 import { AppointmentStatusesEnum, UserRoleEnum } from '@/constants/enums'
 import { Badge } from '@/components/ui/badge'
 import { FacetOption } from '@/components/tables/data-table/data'
@@ -25,6 +25,7 @@ import { useEffect, useRef } from 'react'
 import ConfirmActionDialog from '@/components/dialogs/confirm-action-dialog'
 import ConfirmAction from '@/components/confirm-action'
 import AddCaseAppointmentForm from '@/components/forms/client/add-case-appointment'
+import UpdateAppointmentStatusForm from '@/components/forms/appointment/update-appointment-status'
 
 interface Props {
     params: { caseId: number }
@@ -119,16 +120,25 @@ const Page = ({ params: { caseId } }: Props) => {
             id: 'actions',
             enableHiding: false,
             cell: ({ row }) => (
-                <>
+                <div className='space-x-2'>
                     <ConfirmActionDialog
+                        title="Update Status"
+                        anchor={
+                            <Button size="sm" variant="secondary">
+                                Update Status
+                            </Button>
+                        }
+                        content={<UpdateAppointmentStatusForm data={row.original} caseNumber={data?.id} />}
+                    />
+                    {(userDetails.role === UserRoleEnum.CASE_MANAGER || userDetails.role === UserRoleEnum.SUPER_ADMIN) && <ConfirmActionDialog
                         anchor={
                             <Button variant="secondary" size="sm">
                                 Notify
                             </Button>
                         }
                         content={<ConfirmAction btnText="Send" data={row.original} clientDetails={data?.client} docketNumber={data?.docketNumber} />}
-                    />
-                </>
+                    />}
+                </div>
             )
         }
     ]

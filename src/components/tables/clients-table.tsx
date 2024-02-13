@@ -1,7 +1,7 @@
 'use client'
 import { ColumnDef } from '@tanstack/react-table'
 import { DataTable } from './data-table'
-import { Client } from '@/constants/types'
+import { Client, User } from '@/constants/types'
 import { Button } from '../ui/button'
 import { DataTableColumnHeader } from './data-table/data-table-column-header'
 import { useDeleteClientMutation, useGetClients } from '@/data/hooks/useClientsClient'
@@ -14,10 +14,16 @@ import AddCaseAppointmentForm from '../forms/client/add-case-appointment'
 import TableDetailsDialog from '../dialogs/table-details-dialog'
 import Link from 'next/link'
 import { PageRoutes } from '@/constants/page-routes'
+import { UserRoleEnum } from '@/constants/enums'
+import { LocalStorageKeys } from '@/constants/local-storage-keys'
+import { Edit } from 'lucide-react'
+import EditClientForm from '../forms/client/edit-client-form'
 
 export default function ClientsTable() {
 
   const { mutate: deleteClient, isPending: isLoading } = useDeleteClientMutation()
+  const userData = localStorage.getItem(LocalStorageKeys.USER);
+  const userDetails: User = userData && JSON.parse(userData)
 
   const columns: ColumnDef<Client>[] = [
     {
@@ -107,7 +113,7 @@ export default function ClientsTable() {
         const data = row?.original;
         return (
           <>
-            {data?.clientCases?.length > 0 && (
+            {(userDetails.role === UserRoleEnum.SUPER_ADMIN && data?.clientCases?.length > 0) && (
               <ConfirmActionDialog
                 title="Assign Case Manager"
                 anchor={
@@ -149,8 +155,8 @@ export default function ClientsTable() {
       enableHiding: false,
       cell: ({ row }) => (
         <>
-          {/* <div className="flex items-center gap-2"> */}
-          {/* <ConfirmActionDialog
+          <div className="flex items-center gap-2">
+            {/* <ConfirmActionDialog
             title="Add Case"
             anchor={
               <Button variant="secondary" size="sm">
@@ -159,8 +165,20 @@ export default function ClientsTable() {
             }
             content={<AddClientCaseForm data={row.original} />}
           /> */}
-          <ConfirmDeleteDialog onDelete={() => { deleteClient(row.original.id) }} isLoading={isLoading} />
-          {/* </div> */}
+            {(userDetails.role === UserRoleEnum.SUPER_ADMIN || userDetails.role === UserRoleEnum.CASE_MANAGER) && (
+              <ConfirmActionDialog
+                className='sm:max-w-[90rem]'
+                title="Edit Client"
+                anchor={
+                  <Button size="sm" variant="outline">
+                    <Edit size={15} />
+                  </Button>
+                }
+                content={<EditClientForm data={row.original} />}
+              />
+            )}
+            <ConfirmDeleteDialog onDelete={() => { deleteClient(row.original.id) }} isLoading={isLoading} />
+          </div>
         </>
       )
     }

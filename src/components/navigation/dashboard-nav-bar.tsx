@@ -22,7 +22,7 @@ const navigationItems = [
     title: 'Cases',
     link: PageRoutes.dashboard.CASES,
     icon: <File size={ICON_SIZE} />,
-    roles: [UserRoleEnum.CLIENT, UserRoleEnum.SUPER_ADMIN, UserRoleEnum.CASE_MANAGER]
+    roles: [UserRoleEnum.SUPER_ADMIN, UserRoleEnum.CASE_MANAGER]
   },
 ]
 

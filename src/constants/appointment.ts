@@ -1,4 +1,4 @@
-import { AppointmentTypeEnum } from './enums'
+import { AppointmentStatusesEnum, AppointmentTypeEnum } from './enums'
 
 export const AppointmentTypeOptions = [
   {
@@ -12,5 +12,28 @@ export const AppointmentTypeOptions = [
   {
     label: 'Mandated Class',
     value: AppointmentTypeEnum.MANDATED_CLASS
+  }
+]
+
+export const AppointmentStatusOptions = [
+  {
+    label: 'Upcoming',
+    value: AppointmentStatusesEnum.UPCOMING
   },
+  {
+    label: 'Acknowledged',
+    value: AppointmentStatusesEnum.ACKNOWLEDGED
+  },
+  {
+    label: 'Declined',
+    value: AppointmentStatusesEnum.DECLINED
+  },
+  {
+    label: 'Appeared',
+    value: AppointmentStatusesEnum.APPEARED
+  },
+  {
+    label: 'Absent',
+    value: AppointmentStatusesEnum.ABSENT
+  }
 ]

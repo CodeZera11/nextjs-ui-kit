@@ -7,7 +7,7 @@ import { clientsClient } from '../clients/clientsClient'
 
 export function useGetClients() {
   const { isLoading, data } = useQuery({
-    queryKey: [ApiEndpoints.CLIENTS],
+    queryKey: [`${ApiEndpoints.CLIENTS}-edit`, ApiEndpoints.CLIENTS],
     queryFn: () => clientsClient.all()
   })
 
@@ -41,6 +41,25 @@ export const useCreateClientMutation = () => {
   })
 }
 
+export const useUpdateClientMutation = () => {
+  const queryClient = useQueryClient()
+  const router = useRouter()
+
+  return useMutation({
+    mutationFn: clientsClient.update,
+    onSuccess: () => {
+      toast({
+        variant: 'default',
+        title: 'Client updated successfully'
+      })
+    },
+    onSettled: () => {
+      queryClient.refetchQueries({ queryKey: [`${ApiEndpoints.CLIENTS}-edit`] })
+      router.push(PageRoutes.dashboard.admin.CLIENTS)
+    }
+  })
+}
+
 export const useDeleteClientMutation = () => {
   const queryClient = useQueryClient()
 
@@ -58,54 +77,3 @@ export const useDeleteClientMutation = () => {
     }
   })
 }
-
-// export const useAddCaseMutation = () => {
-//   const router = useRouter()
-//   const queryClient = useQueryClient()
-//   return useMutation({
-//     mutationFn: clientsClient.addCase,
-//     onSuccess: (data: any) => {
-//       toast({
-//         variant: 'default',
-//         title: 'Case Added Successfully'
-//       })
-//     },
-//     onSettled: () => {
-//       queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
-//     }
-//   })
-// }
-
-// export const useAssignCaseManagerMutation = () => {
-//   const router = useRouter()
-//   const queryClient = useQueryClient()
-//   return useMutation({
-//     mutationFn: clientsClient.assignCaseManager,
-//     onSuccess: (data: any) => {
-//       toast({
-//         variant: 'default',
-//         title: 'Case Added Successfully'
-//       })
-//     },
-//     onSettled: () => {
-//       queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
-//     }
-//   })
-// }
-
-// export const useAddCaseAppointmentMutation = () => {
-//   const router = useRouter()
-//   const queryClient = useQueryClient()
-//   return useMutation({
-//     mutationFn: clientsClient.addCaseAppointment,
-//     onSuccess: (data: any) => {
-//       toast({
-//         variant: 'default',
-//         title: 'Case Added Successfully'
-//       })
-//     },
-//     onSettled: () => {
-//       queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
-//     }
-//   })
-// }

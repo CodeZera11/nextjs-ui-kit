@@ -36,21 +36,6 @@ const formSchema = z.object({
     .min(10, {
       message: 'Phone number must be at least 10 characters.'
     }),
-  supervisionTier: z.string({
-    required_error: 'Please enter your supervision tier!'
-  }).optional(),
-  supervisionLevel: z.string({
-    required_error: 'Please enter your supervision level!'
-  }).optional(),
-  attorneyName: z.string({
-    required_error: 'Please enter your attorney name!'
-  }).optional(),
-  attorneyEmail: z.string({
-    required_error: 'Please enter your attorney email!'
-  }).optional(),
-  attorneyPhone: z.string({
-    required_error: 'Please enter your attorney phone!'
-  }).optional(),
   password: z
     .string({
       required_error: 'Please enter a password!'
@@ -108,14 +93,9 @@ const Page = () => {
                 <InputElement name="lastName" placeholder="Wick" label="Last Name" />
                 <CustomInputElement name="email" label="Email" type="email" />
                 <PhoneNumberInputElement name='phoneNumber' label='Phone Number' />
-                <DatePickerElement name='dateOfBirth' label='Date Of Birth' />
-                <InputElement name="supervisionTier" label="Supervision Tier" />
-                <InputElement name="supervisionLevel" label="Supervision Level" />
-                <InputElement name="attorneyName" label="Attorney Name" />
-                <CustomInputElement name="attorneyEmail" label="Attorney Email" type="email" />
-                <PhoneNumberInputElement name='attorneyPhone' label='Attorney Phone Number' />
+                <div className='mt-3'><DatePickerElement name='dateOfBirth' label='Date Of Birth' /></div>
+                <CustomInputElement name="password" label="Password" type="password" />
               </div>
-              <CustomInputElement name="password" label="Password" type="password" />
               <Button disabled={isLoading} className="w-full" type="submit">
                 {isLoading ? 'Loading...' : 'Sign Up'}
               </Button>

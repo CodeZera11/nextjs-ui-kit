@@ -1,4 +1,4 @@
-import { AppointmentTypeEnum, UserRoleEnum } from './enums'
+import { AppointmentStatusesEnum, AppointmentTypeEnum, UserRoleEnum } from './enums'
 
 export enum SortOrder {
   Asc = 'asc',
@@ -59,7 +59,7 @@ export interface Appointment {
   id: number
   date: string
   note?: string
-  status: AppointmentTypeEnum
+  status: AppointmentStatusesEnum
   type: AppointmentTypeEnum
   createdAt: string
   updatedAt: string

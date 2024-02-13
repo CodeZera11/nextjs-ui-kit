@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForgotPassword } from '@/data/hooks/useAuthClient'
 import { useSearchParams } from 'next/navigation'
+import { useEffect } from 'react'
 
 const formSchema = z.object({
   email: z.string({
@@ -26,10 +27,13 @@ const Page = () => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      email: email || ''
-    }
   })
+
+  useEffect(() => {
+    if (email !== null && email !== undefined) {
+      form.setValue('email', email)
+    }
+  }, [])
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     forgotPassword({
@@ -38,7 +42,7 @@ const Page = () => {
   }
 
   return (
-    <main className="auth_section">
+    <section className="auth_section">
       <Card className="auth_card">
         <CardHeader>
           <h1 className="auth_head">Reset Password</h1>
@@ -47,12 +51,10 @@ const Page = () => {
             password!
           </p>
         </CardHeader>
-        <CardContent className="">
+        <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6 px-4">
-              <div className="space-y-2">
-                <CustomInputElement name="email" label="Email" type="email"  />
-              </div>
+              <CustomInputElement name="email" label="Email" type="email" />
               <Button disabled={isLoading} className="w-full" type="submit">
                 {isLoading ? 'Sending...' : 'Send Email'}
               </Button>
@@ -66,7 +68,7 @@ const Page = () => {
           </Form>
         </CardContent>
       </Card>
-    </main>
+    </section>
   )
 }
 
