@@ -16,7 +16,6 @@ export function useGetCases() {
 
 export const useCreateCaseMutation = () => {
   const queryClient = useQueryClient()
-
   const router = useRouter()
 
   return useMutation({

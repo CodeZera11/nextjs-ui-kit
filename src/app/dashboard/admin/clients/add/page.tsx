@@ -89,6 +89,7 @@ const formSchema = z.object({
       'Please enter a combination of uppercase letters, lowercase letters, numbers, and symbols.'
     )
 })
+
 const Page = () => {
   const searchParams = useSearchParams()
 
