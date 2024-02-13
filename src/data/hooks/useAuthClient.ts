@@ -58,7 +58,7 @@ export function useSignIn() {
       localStorage.setItem(LocalStorageKeys.AUTH_TOKEN, jwtToken)
       const newUser = JSON.stringify({ firstName, lastName, email, role, id, forcePasswordChange })
       localStorage.setItem(LocalStorageKeys.USER, newUser)
-      if(role === UserRoleEnum.CLIENT) {
+      if (role === UserRoleEnum.CLIENT) {
         router.push(PageRoutes.dashboard.CASES)
       } else {
         router.push(PageRoutes.dashboard.admin.CLIENTS)
@@ -112,11 +112,9 @@ export function useGetUserRole() {
 }
 
 export function useForgotPassword() {
-  const router = useRouter()
-  const queryClient = useQueryClient()
   return useMutation({
     mutationFn: authClient.forgotPassword,
-    onSuccess: (response: any) => {
+    onSuccess: () => {
       toast({
         variant: 'default',
         title: 'Please check your email or spam box to get the password reset link'

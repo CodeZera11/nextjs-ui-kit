@@ -58,12 +58,29 @@ export const useAddCaseAppointmentMutation = () => {
     onSuccess: (data: any) => {
       toast({
         variant: 'default',
-        title: 'Case Appointment Added Successfully'
+        title: 'Appointment Added Successfully'
       })
     },
     onSettled: () => {
       queryClient.refetchQueries({ queryKey: [ApiEndpoints.CLIENTS] })
       router.refresh()
+    }
+  })
+}
+
+export const useUpdateAppointmentStatusMutation = (id?: number) => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: casesClient.updateCaseAppointment,
+    onSuccess: () => {
+      toast({
+        variant: 'default',
+        title: 'Status Updated Successfully'
+      })
+    },
+    onSettled: () => {
+      queryClient.refetchQueries({ queryKey: [`${ApiEndpoints.CASES}-${id}`] })
+      location.reload()
     }
   })
 }

@@ -72,7 +72,7 @@ const DatePickerElement = ({ name, label, description, disabled = false, custom 
               )}
             </PopoverContent>
           </Popover>
-          <FormDescription>{description}</FormDescription>
+          {description && <FormDescription>{description}</FormDescription>}
           <FormMessage />
         </FormItem>
       )}

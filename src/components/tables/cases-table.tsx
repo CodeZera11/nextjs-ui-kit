@@ -9,8 +9,14 @@ import { Button } from '../ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
 import Link from 'next/link'
 import { PageRoutes } from '@/constants/page-routes'
+import { useRouter } from 'next/navigation'
 
-export default function CasesTable() {
+interface Props {
+  data: Case[] | undefined
+  loading: boolean
+}
+
+export default function CasesTable({ data, loading }: Props) {
 
   const columns: ColumnDef<Case>[] = [
     {
@@ -58,11 +64,11 @@ export default function CasesTable() {
             {data?.appointments && data?.appointments?.length > 0 && (
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="outline">View Documents</Button>
+                  <Button variant="outline">View Appointments</Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[800px]">
                   <DialogHeader>
-                    <DialogTitle>Required Documents</DialogTitle>
+                    <DialogTitle>Appointments</DialogTitle>
                   </DialogHeader>
                   <div className="grid max-h-[600px] grid-cols-2 gap-5 overflow-y-auto py-4">
                     {data.appointments.map((appointment, i) => {
@@ -99,8 +105,6 @@ export default function CasesTable() {
       }
     }
   ]
-
-  const { loading, data } = useGetCases()
 
 
 
