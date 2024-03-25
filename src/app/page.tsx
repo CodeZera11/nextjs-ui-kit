@@ -31,18 +31,6 @@ export default function Home() {
               </Button>
             </Link>
           </div>
-          <div className="flex items-center justify-center gap-10">
-            <Link href={PageRoutes.dashboard.admin.CLIENTS}>
-              <Button className="p-8 text-lg" size="lg">
-                View Clients
-              </Button>
-            </Link>
-            <Link href={PageRoutes.dashboard.CASES}>
-              <Button className="p-8 text-lg" size="lg">
-                View Cases
-              </Button>
-            </Link>
-          </div>
         </div>
       </div>
     </section>
