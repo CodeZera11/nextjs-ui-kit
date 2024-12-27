@@ -50,7 +50,7 @@ const Page = (props: Props) => {
   }
 
   return (
-    <main className="auth_section">
+    <main className="auth_page">
       <Card className="auth_card">
         <CardHeader>
           <h1 className="auth_head">Reset Password</h1>

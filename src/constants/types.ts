@@ -1,5 +1,10 @@
 import { AppointmentStatusesEnum, AppointmentTypeEnum, UserRoleEnum } from './enums'
 
+export interface PageParams {
+  params: Promise<{ [key: string]: string | string[] | undefined }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'

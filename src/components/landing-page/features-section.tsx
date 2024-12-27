@@ -1,48 +1,15 @@
 'use client'
 
+import { Features } from '@/config'
 import { motion } from 'framer-motion'
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
-import { Layers, Zap, Lock, Palette, Package, RefreshCw } from 'lucide-react'
 
-const features = [
-  {
-    icon: Layers,
-    title: 'Next.js 15',
-    description: 'Leverage the latest features of Next.js for optimal performance and developer experience.'
-  },
-  {
-    icon: Zap,
-    title: 'Framer Motion',
-    description: 'Create stunning animations with ease using Framer Motion.'
-  },
-  {
-    icon: Lock,
-    title: 'NextAuth',
-    description: 'Implement secure, customizable authentication with NextAuth.'
-  },
-  {
-    icon: Palette,
-    title: 'Tailwind CSS',
-    description: 'Rapidly build custom user interfaces with the utility-first CSS framework.'
-  },
-  {
-    icon: Package,
-    title: 'shadcn/ui',
-    description: 'Beautiful, accessible, and customizable UI components built with Radix UI and Tailwind CSS.'
-  },
-  {
-    icon: RefreshCw,
-    title: 'React Query',
-    description: 'Fetch, cache, and update data in your React applications without touching any global state.'
-  }
-]
-
-export default function Features() {
+const FeaturesSection = () => {
   return (
     <section id="features" className="py-20 px-4 sm:px-6 lg:px-8">
       <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">Powerful Features</h2>
-      <div className="grid grid-cols-3 gap-5">
-        {features.map((feature, index) => (
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {Features.map((feature, index) => (
           <motion.div
             key={feature.title}
             initial={{ opacity: 0, y: 20 }}
@@ -63,3 +30,4 @@ export default function Features() {
   )
 }
 
+export default FeaturesSection;

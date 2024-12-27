@@ -1,7 +1,8 @@
-import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { WebConfig } from '@/config';
 
-export default function CTA() {
+const CTASection = () => {
   return (
     <section className="py-20 px-4 sm:px-6 lg:px-8 text-center">
       <h2 className="text-3xl sm:text-4xl font-bold mb-4">Ready to Supercharge Your Next.js Development?</h2>
@@ -9,7 +10,7 @@ export default function CTA() {
         Get started with nextjs-ui-kit today and build amazing web applications faster than ever.
       </p>
       <Button asChild size="lg">
-        <Link href="https://github.com/yourusername/nextjs-ui-kit">
+        <Link href={WebConfig.REPO_LINK}>
           Get Started Now
         </Link>
       </Button>
@@ -17,3 +18,4 @@ export default function CTA() {
   )
 }
 
+export default CTASection;

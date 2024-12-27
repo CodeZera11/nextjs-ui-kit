@@ -33,7 +33,7 @@ const DatePickerElement = ({ name, label, description, disabled = false, custom 
               <FormControl>
                 <Button
                   variant={'outline'}
-                  className={cn('w-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
+                  className={cn('w-full h-full pl-3 text-left font-normal', !field.value && 'text-muted-foreground')}
                   disabled={disabled}
                 >
                   {field.value ? field?.value?.toLocaleDateString() : <span>Pick a date</span>}
@@ -51,7 +51,7 @@ const DatePickerElement = ({ name, label, description, disabled = false, custom 
               {custom ? (
                 <CustomCalendar
                   mode="single"
-                  captionLayout="dropdown-buttons"
+                  // captionLayout="dropdown-buttons"
                   selected={field.value}
                   onSelect={field.onChange}
                   fromYear={1960}

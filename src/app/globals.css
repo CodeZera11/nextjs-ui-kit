@@ -8,19 +8,19 @@
     --foreground: 222.2 84% 4.9%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: #de.33333333333544.e666666666668;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
+    --primary: 0, 0%, 100%;
     --primary-foreground: 210 40% 98%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
 
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted-foreground: 218, 11%, 65%;
 
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
@@ -45,14 +45,14 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 270, 80%, 60%;
+    --primary-foreground: 0, 0%, 100%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 210, 10%, 20%;
+    --secondary-foreground: 210, 5%, 65%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210, 10%, 25%;
+    --muted-foreground: 210, 5%, 50%;
 
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
@@ -72,7 +72,7 @@
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-muted;
   }
 }
 
@@ -123,34 +123,28 @@ input::-webkit-inner-spin-button {
   }
 }
 
-.auth_section {
-  display: flex;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+.dark-gradient {
+  @apply bg-gradient-to-b from-gray-900 to-gray-800;
+}
+
+.auth_page {
+  @apply dark-gradient flex min-h-screen items-center justify-center px-4 py-8;
 }
 
 .auth_card {
   width: 100%;
   max-width: 60rem;
   position: relative;
+
+  @apply border-gray-700 bg-gray-800 text-white;
 }
 
 .auth_head {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
-  font-weight: 700;
-  text-align: center;
+  @apply text-center text-4xl font-semibold;
 }
 
 .auth_subhead {
-  font-weight: 300;
-  text-align: center;
-  color: #657160;
+  @apply text-center font-light text-muted-foreground;
 }
 
 .dashboard_form {

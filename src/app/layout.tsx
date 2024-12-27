@@ -8,7 +8,7 @@ import "./globals.css"
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'nextjs-ui-kit | The Ultimate Next.js 15 Starter Kit',
+  title: 'Ui Kit | The Ultimate Next.js 15 Starter Kit',
   description: 'A powerful starter kit featuring Next.js 15, Framer Motion, NextAuth, Tailwind CSS, shadcn/ui, and React Query.',
 }
 

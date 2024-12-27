@@ -5,7 +5,7 @@ import 'react-international-phone/style.css'
 
 interface Props {
   name: string
-  label: string
+  label?: string
   description?: string
   type?: string
 }
@@ -19,7 +19,7 @@ const PhoneNumberInputElement = ({ name, label, description }: Props) => {
       name={name}
       render={({ field }) => (
         <FormItem>
-          <FormLabel>{label}</FormLabel>
+          {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
             <PhoneInput
               defaultCountry="us"
