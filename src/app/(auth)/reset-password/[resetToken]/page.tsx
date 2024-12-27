@@ -31,10 +31,11 @@ const formSchema = z
   )
 
 interface Props {
-  params: { resetToken: string }
+  params: Promise<{ resetToken: string }>
 }
 
-const Page = ({ params }: Props) => {
+const Page = (props: Props) => {
+  // const params = await props.params;
   const { isPending: isLoading, mutate: resetPassword } = useResetPassword()
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -42,7 +43,7 @@ const Page = ({ params }: Props) => {
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    const data = { ...values, resetPasswordToken: params.resetToken }
+    const data = { ...values, resetPasswordToken: "params.resetToken" }
     resetPassword({
       ...data
     })

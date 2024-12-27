@@ -1,15 +1,15 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { Toaster } from '@/components/ui/toaster'
-import Providers from './providers'
 
-import './globals.css'
+import Providers from './providers'
+import "./globals.css"
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Boilerplate',
-  description: 'This is a boilerplate nextjs + shadcn + react-query application.'
+  title: 'nextjs-ui-kit | The Ultimate Next.js 15 Starter Kit',
+  description: 'A powerful starter kit featuring Next.js 15, Framer Motion, NextAuth, Tailwind CSS, shadcn/ui, and React Query.',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
