@@ -38,7 +38,7 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ prefillEmail })
           label="Email"
           placeholder="Enter your email"
         />
-        <Button disabled={isLoading} className="w-full" type="submit">
+        <Button variant="secondary" disabled={isLoading} className="w-full" type="submit">
           {isLoading ? 'Sending...' : 'Send Email'}
         </Button>
         <div className="mt-4 text-center text-sm">

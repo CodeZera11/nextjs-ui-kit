@@ -69,7 +69,9 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ email, firstName, lastName }) =
             placeholder="Enter your password"
           />
         </div>
-        <Button disabled={isLoading} className="w-full" type="submit">
+        <Button
+          variant="secondary"
+          disabled={isLoading} className="w-full" type="submit">
           {isLoading ? 'Loading...' : 'Sign Up'}
         </Button>
         <p className="mt-4 text-center">

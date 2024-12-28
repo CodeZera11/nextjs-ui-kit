@@ -54,7 +54,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ prefillEmail }) => {
             Don't have an account?{' '}
             <Link
               className="text-muted underline"
-              href={`${PageRoutes.SIGNUP}?email=${prefillEmail ?? ''}`}
+              href={PageRoutes.SIGNUP + (prefillEmail ? `?email=${prefillEmail}` : '')}
             >
               Sign up
             </Link>
@@ -63,14 +63,14 @@ const SignInForm: React.FC<SignInFormProps> = ({ prefillEmail }) => {
             Forgot Password?{' '}
             <Link
               className="text-muted underline"
-              href={`${PageRoutes.FORGOT_PASSWORD}?email=${prefillEmail ?? ''}`}
+              href={PageRoutes.FORGOT_PASSWORD + (prefillEmail ? `?email=${prefillEmail}` : '')}
             >
               Reset Password
             </Link>
           </p>
         </div>
       </form>
-    </Form>
+    </Form >
   )
 }
 
