@@ -1,6 +1,7 @@
 import { CardHeader, CardContent, Card } from '@/components/ui/card'
 import SignInForm from '@/components/auth/forms/sign-in-form'
 import { PageParams } from '@/constants/types'
+import { cn } from '@/lib/utils';
 
 const Page = async ({ searchParams }: PageParams) => {
   const queryParams = await searchParams;
@@ -9,7 +10,7 @@ const Page = async ({ searchParams }: PageParams) => {
 
   return (
     <section className="auth_page">
-      <Card className="auth_card">
+      <Card className={cn("auth_card", "")}>
         <CardHeader>
           <h1 className="auth_head">Sign In</h1>
           <p className="auth_subhead">Welcome</p>

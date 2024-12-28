@@ -7,7 +7,7 @@ import { GitHubLogoIcon } from '@radix-ui/react-icons'
 
 const HeroSection = () => {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center min-h-screen text-center">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[calc(100vh-80px)] text-center">
       <AnimatedLogo />
       <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold">
         The Ultimate Next.js 15 Starter Kit

@@ -1,4 +1,5 @@
 export const PageRoutes = {
+  HOME: '/',
   dashboard: {
     admin: {
       USERS: '/dashboard/admin/users',

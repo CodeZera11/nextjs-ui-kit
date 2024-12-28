@@ -165,3 +165,11 @@ input::-webkit-inner-spin-button {
   height: 3.5rem;
   background-color: rgb(243 244 246 / 0.4);
 }
+
+.glass-background {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}

@@ -46,7 +46,7 @@ const SignInForm: React.FC<SignInFormProps> = ({ prefillEmail }) => {
           label="Password"
           placeholder="Enter your password"
         />
-        <Button disabled={isLoading} className="w-full" type="submit">
+        <Button variant="secondary" disabled={isLoading} className="w-full" type="submit">
           {isLoading ? 'Loading...' : 'Sign In'}
         </Button>
         <div className='space-y-1'>
